@@ -28,10 +28,6 @@
                                 <tr>
                                     <td>
                                         <div class="row">
-                                            <div class="col-sm-3 hidden-xs">
-                                                <img src="{{ asset('storage/' . $details['photo']) }}"
-                                                    style="width: 100px; height: auto;" />
-                                            </div>
                                             <div class="col-sm-9">
                                                 <h4 class="nomargin">
                                                     {{ $details['product_name'] ?? 'Product Name Not Set' }}</h4>

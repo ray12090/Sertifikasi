@@ -23,8 +23,6 @@
                 <div class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     @forelse($products as $product)
                         <div class="card border rounded shadow hover:shadow-md transition duration-300">
-                            <img class="w-full h-48 object-cover object-center"
-                                src="{{ asset('storage/' . $product->photo) }}" alt="{{ $product->product_name }}" />
                             <div class="p-4">
                                 <h3 class="font-bold text-lg mb-2">{{ $product->product_name }}</h3>
                                 <p class="text-gray-700 text-base mb-4">{{ $product->product_description }}</p>
