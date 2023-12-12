@@ -2,8 +2,10 @@
 GoCamp adalah sebuah website berbasis Laravel yang ditujukan untuk seseorang yang ingin melakukan camping namun tidak memiliki alat-alatnya. Dengan GoCamp, alat-alat camping dapat disewa dengan harga yang relatif murah sehingga dapat dijangkau bagi berbagai kalangan umur.
 
 ## Anggota Kelompok GoCamp
-- Achmad Fahresya Rayhannur
-- Bevan Pradika Putranto
+| Nama | Pembagian Tugas |
+| --- | --- |
+| Achmad Fahresya Rayhannur | Mengerjakan bagian user, menyiapkan repo, menulis readme |
+| Bevan Pradika Putranto | Mengerjakan bagian admin |
 
 ## Fitur
 - Katalog Produk
