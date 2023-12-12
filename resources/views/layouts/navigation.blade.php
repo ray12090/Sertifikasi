@@ -30,6 +30,13 @@
                         {{ __('Cart') }}
                     </x-nav-link>
                 </div>
+
+                <!-- Your Items -->
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('orders')" :active="request()->routeIs('orders')" align="right">
+                        {{ __('Your Items') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

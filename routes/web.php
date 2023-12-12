@@ -30,13 +30,21 @@ Route::get('rental', [ProductController::class, 'rental'])->middleware('auth')->
 Route::get('cart', [ProductController::class, 'cart'])->middleware('auth')->name('cart');
 
 // Cart Operations
-Route::post('/book/{id}', [ProductController::class, 'addToCart'])->name('addbook.to.cart');
+Route::post('/item/{id}', [ProductController::class, 'addToCart'])->name('additem.to.cart');
+
 // Update and delete cart item routes
 Route::patch('/update-cart-item/{id}', [ProductController::class, 'updateCartItem'])->name('update.cart.item');
 Route::delete('/delete-cart-item/{id}', [ProductController::class, 'deleteCartItem'])->name('delete.cart.item');
 
 // Checkout
 Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+
+// Your Orders
+Route::get('/orders', [OrderController::class, 'orders'])->middleware('auth')->name('orders');
+
+
+// Return Order
+Route::post('/return-order/{orderId}', [OrderController::class, 'returnOrder'])->name('return.order');
 
 // Profile
 Route::middleware('auth')->group(function () {

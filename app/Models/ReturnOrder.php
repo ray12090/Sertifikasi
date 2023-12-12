@@ -4,12 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class ReturnOrder extends Model
 {
     protected $fillable = ['user_id', 'product_id', 'product_name', 'quantity', 'days', 'total_price'];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 }
+

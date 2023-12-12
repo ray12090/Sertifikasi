@@ -20,24 +20,31 @@ class ProductController extends Controller
 
     public function addToCart(Request $request, $id)
     {
+        $request->validate([
+            'quantity' => 'required|integer|min:1|max:2',
+            'days' => 'required|integer|min:1|max:5'
+        ]);
+
         $product = Product::findOrFail($id);
         $cart = session()->get('cart', []);
 
-        if (isset($cart[$id])) {
-            $cart[$id]['quantity']++;
-        } else {
-            $cart[$id] = [
-                'product_name' => $product->product_name,
-                'price' => $product->price,
-                'quantity' => 1,
-                'photo' => $product->photo
-            ];
+        if (count($cart) >= 2) {
+            return redirect()->back()->with('error', 'You can only rent a maximum of 2 items at a time.');
         }
+
+        $cart[$id] = [
+            'product_name' => $product->product_name,
+            'price' => $product->price,
+            'quantity' => $request->quantity,
+            'days' => $request->days,
+            'photo' => $product->photo
+        ];
 
         session()->put('cart', $cart);
         return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
-    
+
+
     public function updateCartItem(Request $request, $id)
     {
         $request->validate(['quantity' => 'required|integer|min:1']);
