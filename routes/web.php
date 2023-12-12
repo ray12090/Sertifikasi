@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,8 +12,8 @@ use App\Http\Controllers\ProductController;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
 |
 */
 
@@ -21,21 +21,29 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-// Users Routes
+// Home
 Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name('home');
 Route::get('post', [HomeController::class, 'post'])->middleware(['auth', 'admin']);
 
-//Rental Routes
+// Rental
 Route::get('rental', [ProductController::class, 'rental'])->middleware('auth')->name('rental');
+Route::get('cart', [ProductController::class, 'cart'])->middleware('auth')->name('cart');
 
+// Cart Operations
+Route::post('/book/{id}', [ProductController::class, 'addToCart'])->name('addbook.to.cart');
+// Update and delete cart item routes
+Route::patch('/update-cart-item/{id}', [ProductController::class, 'updateCartItem'])->name('update.cart.item');
+Route::delete('/delete-cart-item/{id}', [ProductController::class, 'deleteCartItem'])->name('delete.cart.item');
+
+// Checkout
+Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+
+// Profile
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Authentication Routes...
 require __DIR__.'/auth.php';

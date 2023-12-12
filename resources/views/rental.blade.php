@@ -8,8 +8,24 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("This is a rental page") }}
+                <div class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    @forelse($products as $product)
+                        <div class="card border rounded shadow hover:shadow-md transition duration-300">
+                            <img class="w-full h-48 object-cover object-center" src="{{ asset('storage/' . $product->photo) }}" alt="{{ $product->product_name }}" />
+                            <div class="p-4">
+                                <h3 class="font-bold text-lg mb-2">{{ $product->product_name }}</h3>
+                                <p class="text-gray-700 text-base mb-4">{{ $product->product_description }}</p>
+                                <p class="text-gray-900 font-semibold">Price: Rp{{ number_format($product->price, 2) }}</p>
+
+                                <form action="{{ route('addbook.to.cart', $product->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                                </form>
+                            </div>
+                        </div>
+                    @empty
+                        <p class="text-center text-gray-500">No products available.</p>
+                    @endforelse
                 </div>
             </div>
         </div>
