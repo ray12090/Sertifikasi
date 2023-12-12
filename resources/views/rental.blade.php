@@ -16,7 +16,7 @@
                             <option value="{{ $category }}" {{ request('category') == $category ? 'selected' : '' }}>{{ $category }}</option>
                         @endforeach
                     </select>
-                    <button type="submit" class="btn btn-primary">Filter</button>
+                    <button type="submit" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-large rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">Filter</button>
                 </form>
             </div>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -37,7 +37,7 @@
                                     <label for="days-{{ $product->id }}">Lama Sewa:</label>
                                     <input type="number" name="days" min="1" max="5" value="1"
                                         class="form-control mb-2" />
-                                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                                    <button type="submit" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">Add to Cart</button>
                                 </form>
                             </div>
                         </div>

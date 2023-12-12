@@ -9,15 +9,15 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <table id="cart" class="table-auto">
+                    <table id="cart" class="border-collapse table-auto w-full text-sm">
                         <thead>
                             <tr>
-                                <th>Product</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Rental Duration (Days)</th>
-                                <th>Total</th>
-                                <th>Actions</th>
+                                <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Product</th>
+                                <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Price</th>
+                                <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Quantity</th>
+                                <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Rental Duration (Days)</th>
+                                <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Total</th>
+                                <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -26,7 +26,7 @@
                                 @php $totalPerProduct = $details['price'] * $details['quantity']; @endphp
                                 @php $total += $totalPerProduct; @endphp
                                 <tr>
-                                    <td>
+                                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
                                         <div class="row">
                                             <div class="col-sm-9">
                                                 <h4 class="nomargin">
@@ -34,22 +34,22 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td>${{ number_format($details['price'], 2) }}</td>
-                                    <td>{{ $details['quantity'] }}</td>
-                                    <td>{{ $details['days'] ?? 'N/A' }}</td>
-                                    <td>${{ number_format($totalPerProduct, 2) }}</td>
-                                    <td>
+                                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">${{ number_format($details['price'], 2) }}</td>
+                                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">{{ $details['quantity'] }}</td>
+                                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">{{ $details['days'] ?? 'N/A' }}</td>
+                                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">${{ number_format($totalPerProduct, 2) }}</td>
+                                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
                                         <form action="{{ route('update.cart.item', $id) }}" method="POST">
                                             @csrf
                                             @method('patch')
                                             <input type="number" name="quantity" value="{{ $details['quantity'] }}"
                                                 class="form-control quantity" min="1" />
-                                            <button type="submit" class="btn btn-info btn-sm mt-2">Update</button>
+                                            <button type="submit" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-large rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">Update</button>
                                         </form>
                                         <form action="{{ route('delete.cart.item', $id) }}" method="POST">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit" class="btn btn-danger btn-sm mt-2">Delete</button>
+                                            <button type="submit" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-large rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">Delete</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -61,15 +61,18 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="6" class="text-right"><strong>Total:
-                                        ${{ number_format($total, 2) }}</strong></td>
+                                <td colspan="6" class="text-right"><strong>Total: ${{ number_format($total, 2) }}</strong></td>
                             </tr>
                             <tr>
                                 <td colspan="6" class="text-right">
-                                    <a href="{{ url('/home') }}" class="btn btn-primary">Continue Shopping</a>
-                                    <form action="{{ route('checkout') }}" method="POST" style="display: inline;">
+                                    <a href="{{ url('/home') }}" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                        Continue Shopping
+                                    </a>
+                                    <form action="{{ route('checkout') }}" method="POST" class="inline">
                                         @csrf
-                                        <button type="submit" class="btn btn-danger">Checkout</button>
+                                        <button type="submit" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                            Checkout
+                                        </button>
                                     </form>
                                 </td>
                             </tr>
