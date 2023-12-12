@@ -7,6 +7,18 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="mb-4">
+                <form action="{{ route('rental') }}" method="GET" class="flex gap-4">
+                    <input type="text" name="search" placeholder="Search by name" value="{{ request('search') }}" class="form-control">
+                    <select name="category" class="form-control">
+                        <option value="all" {{ request('category') == 'all' ? 'selected' : '' }}>All Categories</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category }}" {{ request('category') == $category ? 'selected' : '' }}>{{ $category }}</option>
+                        @endforeach
+                    </select>
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </form>
+            </div>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     @forelse($products as $product)
@@ -21,8 +33,10 @@
 
                                 <form action="{{ route('additem.to.cart', $product->id) }}" method="POST">
                                     @csrf
+                                    <label for="quantity-{{ $product->id }}">Jumlah:</label>
                                     <input type="number" name="quantity" min="1" max="2" value="1"
                                         class="form-control mb-2" />
+                                    <label for="days-{{ $product->id }}">Lama Sewa:</label>
                                     <input type="number" name="days" min="1" max="5" value="1"
                                         class="form-control mb-2" />
                                     <button type="submit" class="btn btn-primary">Add to Cart</button>

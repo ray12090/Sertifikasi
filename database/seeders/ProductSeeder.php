@@ -84,7 +84,7 @@ class ProductSeeder extends Seeder
             'product_description' => 'Sleeping bag yang hangat dan nyaman, cocok untuk segala cuaca, dengan isolasi yang efektif untuk menjaga suhu tubuh.',
             'photo' => 'sleeping_bag.png',
             'price' => 5000,
-            'category1' => 'Tidur',
+            'category1' => 'Perlengkapan Tidur',
             'category2' => 'Perlindungan',
         ]);
 
@@ -94,7 +94,7 @@ class ProductSeeder extends Seeder
             'product_description' => 'Matras camping yang nyaman, memberikan isolasi dari tanah dan mudah diisi angin.',
             'photo' => 'matras.png',
             'price' => 5000,
-            'category1' => 'Tidur',
+            'category1' => 'Perlengkapan Tidur',
             'category2' => 'Kenyamanan',
         ]);
 
@@ -104,7 +104,7 @@ class ProductSeeder extends Seeder
             'product_description' => 'Bantal camping yang lembut dan mudah dibawa, memberikan kenyamanan tambahan saat tidur di alam.',
             'photo' => 'bantal_camping.png',
             'price' => 5000,
-            'category1' => 'Tidur',
+            'category1' => 'Perlengkapan Tidur',
             'category2' => 'Kenyamanan',
         ]);
 

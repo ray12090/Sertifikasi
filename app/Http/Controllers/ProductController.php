@@ -7,10 +7,24 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
-    public function rental()
+    public function rental(Request $request)
     {
-        $products = Product::all();
-        return view('rental', compact('products'));
+        $query = Product::query();
+
+        // If a category is selected
+        if ($request->has('category') && $request->category != 'all') {
+            $query->where('category1', $request->category);
+        }
+
+        // If a search term is entered
+        if ($request->has('search')) {
+            $query->where('product_name', 'like', '%' . $request->search . '%');
+        }
+
+        $products = $query->get();
+        $categories = Product::select('category1')->distinct()->pluck('category1');
+
+        return view('rental', compact('products', 'categories'));
     }
 
     public function cart()
