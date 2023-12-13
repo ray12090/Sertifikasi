@@ -12,4 +12,8 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public static function totalOrderPrice()
+    {
+        return self::sum('total_price');
+    }
 }

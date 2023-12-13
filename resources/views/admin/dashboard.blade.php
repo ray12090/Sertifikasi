@@ -1,3 +1,5 @@
+dashboard.blade.php
+
 @extends('admin.adminhome')
 @section('content')
     <!-- Konten halaman Data User -->
@@ -28,7 +30,7 @@
                         
                         <div class="mt-4 flex items-center">
                     <div class="h2 mb-0 font-weight-bold text-gray-800 ml-4">
-                       123
+                    {{ $jumlahUser}} <p class="text-sm">&nbsp;user</p>
                     </div>
                             <div class="h1 font-weight-bold text-gray-800 ml-auto">
                             <!-- Tambahkan data jumlah barang tersedia di sini -->
@@ -44,7 +46,7 @@
                     <div class="card-body">
                         <div class="flex items-center">
                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                Jumlah Barang Tersedia
+                                Jumlah Produk Tersedia
                             </div>
                             <div class="h2 mb-0 font-weight-bold text-gray-800 ml-7">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-14 h-14">
@@ -54,8 +56,9 @@
                         </div>
                         
                         <div class="mt-4 flex items-center">
-                    <div class="h2 mb-0 font-weight-bold text-gray-800 ml-4">
-                        
+                    <div class="h2 flex mb-0 font-weight-bold text-gray-800 ml-4">
+                        <!-- #New -->
+                        {{ $jumlahProduct}} <p class="text-sm">&nbsp;produk</p>
                     </div>
                             <div class="h1 font-weight-bold text-gray-800 ml-auto">
                             <!-- Tambahkan data jumlah barang tersedia di sini -->
@@ -80,8 +83,8 @@
                         </div>
                         
                         <div class="mt-4 flex items-center">
-                    <div class="h2 mb-0 font-weight-bold text-gray-800 ml-4">
-                        123
+                    <div class="h4 mb-0 font-weight-bold text-gray-800 ml-4">
+                        <span class="text-lg">Rp</span>{{$totalPrice}}
                     </div>
                             <div class="h1 font-weight-bold text-gray-800 ml-auto">
                             <!-- Tambahkan data jumlah barang tersedia di sini -->
