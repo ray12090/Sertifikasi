@@ -5,6 +5,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DataUserController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +55,18 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+//Admin 
+
+//Dashboard
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'admin']);
+// Route::get('/data-users', [DataUserController::class, 'index'])->middleware(['auth', 'admin']);
+Route::resource('/data-user', \App\Http\Controllers\Admin\DataUserController::class);
+Route::resource('/data-produk', \App\Http\Controllers\Admin\DataProdukController::class);
+Route::resource('/data-transaksi', \App\Http\Controllers\Admin\DataTransaksiController::class);
+Route::resource('/data-pengembalian', \App\Http\Controllers\Admin\DataPengembalianController::class);
+Route::get('/admin/returns', [AdminDashboardController::class, 'returns'])->name('admin.returns');
 
 // Authentication Routes...
 require __DIR__.'/auth.php';

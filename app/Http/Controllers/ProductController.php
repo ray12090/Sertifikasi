@@ -83,4 +83,11 @@ class ProductController extends Controller
 
         return redirect()->route('cart')->with('success', 'Item removed from cart.');
     }
+
+        public function getJumlahBarang()
+    {
+        $jumlahBarang = Product::sum('jumlah');
+
+        return view('admin.dashboard', compact('jumlahBarang'));
+    }
 }

@@ -18,6 +18,7 @@ class OrderController extends Controller
             Order::create([
                 'user_id' => Auth::id(),
                 'product_id' => $productId,
+                'name' => Auth::user()->name,
                 'product_name' => $details['product_name'],
                 'quantity' => $details['quantity'],
                 'days' => $details['days'],
@@ -67,6 +68,7 @@ class OrderController extends Controller
         ReturnOrder::create([
             'user_id' => $order->user_id,
             'product_id' => $order->product_id,
+            'name' => $order->name,
             'product_name' => $order->product_name,
             'quantity' => $order->quantity,
             'days' => $order->days,
