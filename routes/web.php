@@ -26,7 +26,7 @@ Route::get('/', function () {
 
 // Home
 Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name('home');
-Route::get('post', [HomeController::class, 'post'])->middleware(['auth', 'admin']);
+Route::get('post', [HomeController::class, 'dashboard'])->middleware(['auth', 'admin']);
 
 // Rental
 Route::get('rental', [ProductController::class, 'rental'])->middleware('auth')->name('rental');
@@ -56,7 +56,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-//Admin 
+//Admin
 
 //Dashboard
 

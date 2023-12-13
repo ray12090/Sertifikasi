@@ -1,5 +1,3 @@
-dashboard.blade.php
-
 @extends('admin.adminhome')
 @section('content')
     <!-- Konten halaman Data User -->
@@ -27,7 +25,7 @@ dashboard.blade.php
                             </svg>
                             </div>
                         </div>
-                        
+
                         <div class="mt-4 flex items-center">
                     <div class="h2 mb-0 font-weight-bold text-gray-800 ml-4">
                     {{ $jumlahUser}} <p class="text-sm">&nbsp;user</p>
@@ -40,7 +38,7 @@ dashboard.blade.php
                     </div>
                 </div>
             </div>
-                                
+
             <div class="col-md-4 p-6">
                 <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body">
@@ -54,7 +52,7 @@ dashboard.blade.php
                             </svg>
                             </div>
                         </div>
-                        
+
                         <div class="mt-4 flex items-center">
                     <div class="h2 flex mb-0 font-weight-bold text-gray-800 ml-4">
                         <!-- #New -->
@@ -81,7 +79,7 @@ dashboard.blade.php
                             </svg>
                             </div>
                         </div>
-                        
+
                         <div class="mt-4 flex items-center">
                     <div class="h4 mb-0 font-weight-bold text-gray-800 ml-4">
                         <span class="text-lg">Rp</span>{{$totalPrice}}
@@ -96,7 +94,7 @@ dashboard.blade.php
             </div>
         </div>
 
-        
+
     </div>
 
 @endsection

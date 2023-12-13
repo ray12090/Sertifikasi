@@ -9,69 +9,129 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900" align="center">Active Orders</h3>
-                    <table class="border-collapse table-auto w-full text-sm">
-                        <thead>
-                            <tr>
-                                <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Product</th>
-                                <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Price</th>
-                                <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Quantity</th>
-                                <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Rental Duration (Days)</th>
-                                <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Total</th>
-                                <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($orders as $order)
+                    <h3 class="text-lg leading-6 font-bold text-gray-900" align="center">Active Orders</h3>
+                    <div class="pb-6 pt-3 ">
+                        <table class="w-full text-sm">
+                            <thead>
                                 <tr>
-                                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">{{ $order->product_name }}</td>
-                                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">${{ number_format($order->total_price, 2) }}</td>
-                                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">{{ $order->quantity }}</td>
-                                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">{{ $order->days }}</td>
-                                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">${{ number_format($order->total_price, 2) }}</td>
-                                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
-                                        <form action="{{ route('return.order', $order->id) }}" method="POST">
-                                            @csrf
-                                            <button type="submit" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">Return</button>
-                                        </form>
-                                    </td>
+                                    <th
+                                        class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
+                                        Product</th>
+                                    <th
+                                        class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
+                                        Price</th>
+                                    <th
+                                        class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
+                                        Quantity</th>
+                                    <th
+                                        class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
+                                        Borrow Date</th>
+                                    <th
+                                        class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
+                                        Return Date</th>
+                                    <th
+                                        class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
+                                        Total</th>
+                                    <th
+                                        class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
+                                        Actions</th>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="6">No active orders</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @forelse($orders as $order)
+                                    <tr>
+                                        <td
+                                            class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
+                                            {{ $order->product_name }}</td>
+                                        <td
+                                            class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
+                                            Rp{{ number_format($order->total_price, 2) }}</td>
+                                        <td
+                                            class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
+                                            {{ $order->quantity }}</td>
+                                        <td
+                                            class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
+                                            {{ $order->borrow_date }}</td>
+                                        <td
+                                            class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
+                                            {{ $order->return_date }}</td>
+                                        <td
+                                            class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
+                                            Rp{{ number_format($order->total_price, 2) }}</td>
+                                        <td
+                                            class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
+                                            <form action="{{ route('return.order', $order->id) }}" method="POST">
+                                                @csrf
+                                                <button type="submit"
+                                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">Return</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="7" class="font-bold p-4 pl-8 text-slate-800 dark:text-slate-800 text-center">No active orders</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
 
-                    <!-- Returned Orders Table -->
-                    <h3 class="text-lg leading-6 font-medium text-gray-900" align="center">Returned Orders</h3>
-                    <table class="border-collapse table-auto w-full text-sm">
-                        <thead>
-                            <tr>
-                                <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Product</th>
-                                <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Price</th>
-                                <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Quantity</th>
-                                <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Rental Duration (Days)</th>
-                                <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($returnOrders as $returnOrder)
+                    <h3 class="text-lg leading-6 font-bold text-gray-900" align="center">Returned Orders</h3>
+                    <div class="pt-3">
+                        <table class="w-full text-sm">
+                            <thead>
                                 <tr>
-                                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">{{ $returnOrder->product_name }}</td>
-                                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">${{ number_format($returnOrder->total_price, 2) }}</td>
-                                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">{{ $returnOrder->quantity }}</td>
-                                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">{{ $returnOrder->days }}</td>
-                                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">${{ number_format($returnOrder->total_price, 2) }}</td>
+                                    <th
+                                        class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
+                                        Product</th>
+                                    <th
+                                        class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
+                                        Price</th>
+                                    <th
+                                        class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
+                                        Quantity</th>
+                                    <td
+                                        class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
+                                        Borrow Date</td>
+                                    <td
+                                        class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
+                                        Return Date</td>
+                                    <th
+                                        class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
+                                        Total</th>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="6">No returned orders</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @forelse($returnOrders as $returnOrder)
+                                    <tr>
+                                        <td
+                                            class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
+                                            {{ $returnOrder->product_name }}</td>
+                                        <td
+                                            class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
+                                            Rp{{ number_format($returnOrder->total_price, 2) }}</td>
+                                        <td
+                                            class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
+                                            {{ $returnOrder->quantity }}</td>
+                                        <td
+                                            class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
+                                            {{ $returnOrder->borrow_date }}</td>
+                                        <td
+                                            class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
+                                            {{ $returnOrder->return_date }}</td>
+                                        <td
+                                            class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
+                                            Rp{{ number_format($returnOrder->total_price, 2) }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="7" class="font-bold p-4 pl-8 text-slate-800 dark:text-slate-800 text-center">No returned orders</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
             </div>
         </div>

@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\ReturnOrder;
 use App\Models\Product;
+use App\Models\Transactions;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
@@ -15,13 +17,25 @@ class OrderController extends Controller
         $cart = session()->get('cart');
 
         foreach ($cart as $productId => $details) {
+            $borrowDate = isset($details['borrow_date']) ? $details['borrow_date'] : Carbon::today()->toDateString();
+            $returnDate = isset($details['return_date']) ? $details['return_date'] : Carbon::today()->addDays(1)->toDateString();
+
             Order::create([
                 'user_id' => Auth::id(),
                 'product_id' => $productId,
-                'name' => Auth::user()->name,
                 'product_name' => $details['product_name'],
                 'quantity' => $details['quantity'],
-                'days' => $details['days'],
+                'borrow_date' => $borrowDate,
+                'return_date' => $returnDate,
+                'total_price' => $details['price'] * $details['quantity']
+            ]);
+            Transactions::create([
+                'user_id' => Auth::id(),
+                'product_id' => $productId,
+                'product_name' => $details['product_name'],
+                'quantity' => $details['quantity'],
+                'borrow_date' => $borrowDate,
+                'return_date' => $returnDate,
                 'total_price' => $details['price'] * $details['quantity']
             ]);
         }
@@ -68,10 +82,10 @@ class OrderController extends Controller
         ReturnOrder::create([
             'user_id' => $order->user_id,
             'product_id' => $order->product_id,
-            'name' => $order->name,
             'product_name' => $order->product_name,
             'quantity' => $order->quantity,
-            'days' => $order->days,
+            'borrow_date' => $order['borrow_date'],
+            'return_date' => $order['return_date'],
             'total_price' => $order->total_price,
         ]);
 

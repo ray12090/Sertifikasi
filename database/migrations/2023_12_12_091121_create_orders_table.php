@@ -17,7 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id');
             $table->string('product_name');
             $table->integer('quantity');
-            $table->integer('days');
+            $table->date('borrow_date');
+            $table->date('return_date');
             $table->decimal('total_price', 10, 2);
             $table->timestamps();
 

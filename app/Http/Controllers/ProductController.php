@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Carbon\Carbon;
 
 class ProductController extends Controller
 {
@@ -36,7 +37,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'quantity' => 'required|integer|min:1|max:2',
-            'days' => 'required|integer|min:1|max:5'
+            // 'days' => 'required|integer|min:1|max:5'
         ]);
 
         $product = Product::findOrFail($id);
@@ -50,7 +51,8 @@ class ProductController extends Controller
             'product_name' => $product->product_name,
             'price' => $product->price,
             'quantity' => $request->quantity,
-            'days' => $request->days,
+            // 'borrow_date' => Carbon::today()->toDateString(),
+            // 'return_date' => Carbon::today()->addDays(1)->toDateString(),
             'photo' => $product->photo
         ];
 
@@ -61,16 +63,32 @@ class ProductController extends Controller
 
     public function updateCartItem(Request $request, $id)
     {
-        $request->validate(['quantity' => 'required|integer|min:1']);
-        $cart = session()->get('cart');
+        $request->validate([
+            'quantity' => 'required|integer|min:1|max:2',
+            'borrow_date' => 'required|date',
+            'return_date' => 'required|date|after_or_equal:borrow_date',
+        ]);
 
+        $borrowDate = Carbon::parse($request->borrow_date);
+        $returnDate = Carbon::parse($request->return_date);
+        $duration = $borrowDate->diffInDays($returnDate);
+
+        if ($duration > 5) {
+            return redirect()->back()->with('error', 'The rental period cannot exceed 5 days.');
+        }
+
+        $cart = session()->get('cart');
         if (isset($cart[$id])) {
             $cart[$id]['quantity'] = $request->quantity;
+            $cart[$id]['borrow_date'] = $borrowDate->toDateString();
+            $cart[$id]['return_date'] = $returnDate->toDateString();
             session()->put('cart', $cart);
         }
 
         return redirect()->route('cart')->with('success', 'Cart updated successfully.');
     }
+
+
 
     public function deleteCartItem($id)
     {
@@ -84,7 +102,7 @@ class ProductController extends Controller
         return redirect()->route('cart')->with('success', 'Item removed from cart.');
     }
 
-        public function getJumlahBarang()
+    public function getJumlahBarang()
     {
         $jumlahBarang = Product::sum('jumlah');
 
