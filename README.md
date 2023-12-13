@@ -8,9 +8,11 @@ GoCamp adalah sebuah website berbasis Laravel yang ditujukan untuk seseorang yan
 | Bevan Pradika Putranto | Mengerjakan bagian admin |
 
 ## Fitur
-- Katalog Produk
-- Sistem Pencarian Produk
-- Sistem Pemesanan
+| Admin | User |
+| --- | --- |
+| CRUD User | Filter Produk Berdasarkan Kategori |
+| CRUD Produk | Sistem Pencarian Produk |
+| Mengembalikan Barang | Sistem Pemesanan |
 
 ## Screenshots
 
