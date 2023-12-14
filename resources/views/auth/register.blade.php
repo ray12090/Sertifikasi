@@ -1,9 +1,21 @@
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">
+        <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
+            @auth
+                <a href="{{ url('/home') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-800 dark:hover:text-white-400">Dashboard</a>
+            @else
+                <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-800 dark:hover:text-white-400">Log in</a>
+
+                @if (Route::has('register'))
+                    <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-800 dark:hover:text-gray-400">Register</a>
+                @endif
+            @endauth
+        </div>
         @csrf
 
         <!-- Name -->
         <div>
+            <div class="font-bold text-xl" align="center">Daftar GoCamp</div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
@@ -40,7 +52,7 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
+            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2" href="{{ route('login') }}">
                 {{ __('Already registered?') }}
             </a>
 

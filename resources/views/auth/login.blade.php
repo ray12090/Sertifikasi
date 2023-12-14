@@ -1,12 +1,24 @@
 <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
+    <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
+        @auth
+            <a href="{{ url('/rental') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white-400">Dashboard</a>
+        @else
+            <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-800 dark:hover:text-white-400">Log in</a>
+
+            @if (Route::has('register'))
+                <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-800 dark:hover:text-white-400">Register</a>
+            @endif
+        @endauth
+    </div>
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
         <!-- Email Address -->
         <div>
+            <div class="font-bold text-xl" align="center">Selamat Datang di GoCamp!</div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />

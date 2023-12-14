@@ -18,11 +18,11 @@
                 </div>
 
                 <!-- Rental Page Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                {{-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('rental')" :active="request()->routeIs('rental')">
                         {{ __('Rental') }}
                     </x-nav-link>
-                </div>
+                </div> --}}
 
                 <!-- Cart Page Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">

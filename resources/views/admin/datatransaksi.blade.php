@@ -1,62 +1,81 @@
 @extends('admin.adminhome')
 @section('content')
-    <div class="container grid px-6 mx-auto" style="width:1000px">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8" style="width:1000px">
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-800">
             Data Transaksi
         </h2>
 
-        <div class="w-full overflow-hidden rounded-lg shadow-xs px-8 py-4">
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
             <div class="w-full overflow-x-auto">
-                <table class="w-full whitespace-no-wrap ">
+                <table class="min-w-full whitespace-no-wrap">
                     <thead>
                         <tr
                             class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                             <th class="px-4 py-3">ID Transaksi</th>
                             <th class="px-4 py-3">ID User</th>
                             <th class="px-4 py-3">ID Product</th>
-                            <th class="px-4 py-3">NProduct Name</th>
+                            <th class="px-4 py-3">Product Name</th>
                             <th class="px-4 py-3">Quantity</th>
                             <th class="px-4 py-3">Borrow Date</th>
                             <th class="px-4 py-3">Return Date</th>
                             <th class="px-4 py-3">Total Paid</th>
+                            <th class="px-4 py-3">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                        @forelse ($data as $post)
+                        @forelse ($data as $transaction)
                             <tr class="text-gray-700 dark:text-gray-400">
                                 <td class="px-5 py-3">
                                     <div class="flex items-center text-sm">
-                                        <p class="font-semibold">{{ $post->name }}</p>
+                                        <p class="font-semibold">{{ $transaction->id }}</p>
 
                                     </div>
                                 </td>
                                 <td class="px-5 py-3">
                                     <div class="flex items-center text-sm">
-                                        <p class="font-semibold">{{ $post->product_name }}</p>
+                                        <p class="font-semibold">{{ $transaction->user_id }}</p>
 
                                     </div>
                                 </td>
                                 <td class="px-5 py-3">
                                     <div class="flex items-center text-sm">
-                                        <p class="font-semibold">{{ $post->quantity }}</p>
+                                        <p class="font-semibold">{{ $transaction->product_id }}</p>
 
                                     </div>
                                 </td>
                                 <td class="px-5 py-3">
                                     <div class="flex items-center text-sm">
-                                        <p class="font-semibold">{{ $post->days }}</p>
+                                        <p class="font-semibold">{{ $transaction->product_name }}</p>
 
                                     </div>
                                 </td>
                                 <td class="px-5 py-3">
                                     <div class="flex items-center text-sm">
-                                        <p class="font-semibold">{{ $post->total_price }}</p>
+                                        <p class="font-semibold">{{ $transaction->quantity }}</p>
+
+                                    </div>
+                                </td>
+                                <td class="px-5 py-3">
+                                    <div class="flex items-center text-sm">
+                                        <p class="font-semibold">{{ $transaction->borrow_date }}</p>
+
+                                    </div>
+                                </td>
+                                <td class="px-5 py-3">
+                                    <div class="flex items-center text-sm">
+                                        <p class="font-semibold">{{ $transaction->return_date }}</p>
+
+                                    </div>
+                                </td>
+                                <td class="px-5 py-3">
+                                    <div class="flex items-center text-sm">
+                                        <p class="font-semibold">Rp{{ $transaction->total_price }}</p>
 
                                     </div>
                                 </td>
                                 <td class="px-4 py-3">
                                     <div class="flex items-center space-x-4 text-sm">
-                                        <a href="{{ route('data-transaksi.show', $post->id) }}"
+                                        <a href="{{ route('data-transaksi.show', $transaction->id) }}"
                                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-500 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                             aria-label="Show">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -74,7 +93,7 @@
                             </tr>
                         @empty
                             <div class="alert alert-danger">
-                                Produk belum Tersedia.
+                                Transaksi Kosong.
                             </div>
                         @endforelse
                     </tbody>

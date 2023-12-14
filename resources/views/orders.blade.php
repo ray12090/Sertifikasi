@@ -69,7 +69,9 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="7" class="font-bold p-4 pl-8 text-slate-800 dark:text-slate-800 text-center">No active orders</td>
+                                        <td colspan="7"
+                                            class="font-bold p-4 pl-8 text-slate-800 dark:text-slate-800 text-center">No
+                                            active orders</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -81,6 +83,9 @@
                         <table class="w-full text-sm">
                             <thead>
                                 <tr>
+                                    <th
+                                        class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
+                                        Status</th>
                                     <th
                                         class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
                                         Product</th>
@@ -96,14 +101,20 @@
                                     <td
                                         class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
                                         Return Date</td>
-                                    <th
+                                    <td
                                         class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
-                                        Total</th>
+                                        Penalty</td>
+                                    <td
+                                        class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
+                                        Total</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($returnOrders as $returnOrder)
                                     <tr>
+                                        <td
+                                            class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-green-800 dark:text-green-600 text-center">
+                                            Telat</td>
                                         <td
                                             class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
                                             {{ $returnOrder->product_name }}</td>
@@ -120,12 +131,17 @@
                                             class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
                                             {{ $returnOrder->return_date }}</td>
                                         <td
+                                            class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-red-800 dark:text-red-600 text-center">
+                                            Rp{{ number_format($returnOrder->total_price, 2) }}</td>
+                                        <td
                                             class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
                                             Rp{{ number_format($returnOrder->total_price, 2) }}</td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="7" class="font-bold p-4 pl-8 text-slate-800 dark:text-slate-800 text-center">No returned orders</td>
+                                        <td colspan="7"
+                                            class="font-bold p-4 pl-8 text-slate-800 dark:text-slate-800 text-center">No
+                                            returned orders</td>
                                     </tr>
                                 @endforelse
                             </tbody>

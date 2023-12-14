@@ -21,7 +21,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 // Home
@@ -66,6 +66,8 @@ Route::resource('/data-user', \App\Http\Controllers\Admin\DataUserController::cl
 Route::resource('/data-produk', \App\Http\Controllers\Admin\DataProdukController::class);
 Route::resource('/data-transaksi', \App\Http\Controllers\Admin\DataTransaksiController::class);
 Route::resource('/data-pengembalian', \App\Http\Controllers\Admin\DataPengembalianController::class);
+Route::get('/data-pengembalian/{id}', [\App\Http\Controllers\Admin\DataPengembalianController::class, 'show'])->name('data-pengembalian.show');
+Route::delete('/data-pengembalian/{id}', [\App\Http\Controllers\Admin\DataPengembalianController::class, 'destroy'])->name('data-pengembalian.destroy');
 Route::get('/admin/returns', [AdminDashboardController::class, 'returns'])->name('admin.returns');
 
 // Authentication Routes...

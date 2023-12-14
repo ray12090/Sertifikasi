@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\ReturnOrder;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +16,7 @@ class DataPengembalianController extends Controller
     public function index(): View
     {
         //get datas
-        $data = Order::oldest()->paginate(5);
+        $data = ReturnOrder::oldest()->paginate(5);
 
         return view('admin.datapengembalian', compact('data'));
     }
@@ -65,7 +66,7 @@ class DataPengembalianController extends Controller
     public function destroy($id): RedirectResponse
     {
         //get data by ID
-        $data = Order::findOrFail($id);
+        $data = ReturnOrder::findOrFail($id);
 
         //delete data
         $data->delete();

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Order;
+use App\Models\Transactions;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
@@ -14,8 +14,7 @@ class DataTransaksiController extends Controller
 {
     public function index(): View
     {
-        //get datas
-        $data = Order::oldest()->paginate(5);
+        $data = Transactions::oldest()->paginate(5);
 
         return view('admin.datatransaksi', compact('data'));
     }
@@ -39,7 +38,7 @@ class DataTransaksiController extends Controller
         ]);
 
         //create post
-        Order::create([
+        Transactions::create([
             'product_name' => $request->product_name,
             'product_id' => $request->product_id,
             'name' => $request->name,
@@ -56,7 +55,7 @@ class DataTransaksiController extends Controller
     public function show(string $id): View
     {
         //get data by ID
-        $data = Order::findOrFail($id);
+        $data = Transactions::findOrFail($id);
 
         //render view with data
         return view('admin.detail-transaksi', compact('data'));
@@ -65,7 +64,7 @@ class DataTransaksiController extends Controller
     public function destroy($id): RedirectResponse
     {
         //get data by ID
-        $data = Order::findOrFail($id); 
+        $data = Transactions::findOrFail($id);
 
         //delete data
         $data->delete();
@@ -76,7 +75,7 @@ class DataTransaksiController extends Controller
     public function edit(string $id): View
     {
         //get data by ID
-        $data = Order::findOrFail($id);
+        $data = Transactions::findOrFail($id);
 
         //render view with data
         return view('admin.edit-transaksi', compact('data'));
