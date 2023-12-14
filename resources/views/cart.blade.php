@@ -75,7 +75,7 @@
                                         <label for="return_date">Return Date:</label>
                                         <input type="date" name="return_date"
                                             value="{{ $details['return_date'] ??today()->addDays(1)->toDateString() }}"
-                                            class="p-1 pl-2 w-50" min="{{ today()->addDays(1)->toDateString() }}" />
+                                            class="p-1 pl-2 w-50" />
                                     </td>
                                     <td
                                         class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">

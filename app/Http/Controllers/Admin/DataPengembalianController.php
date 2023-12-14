@@ -13,18 +13,13 @@ use Illuminate\Validation\Rules;
 
 class DataPengembalianController extends Controller
 {
-    public function index(): View
+    public function index()
     {
-        //get datas
-        $data = ReturnOrder::oldest()->paginate(5);
-
-        return view('admin.datapengembalian', compact('data'));
+        $orders = Order::where('status', 2)->paginate(10); // Adjust pagination as needed
+        return view('admin.datapengembalian', compact('orders'));
     }
 
-    // public function create(): View
-    // {
-    //     return view('admin.tambah-pengembalian');
-    // }
+
 
     public function store(Request $request): RedirectResponse
     {
@@ -48,7 +43,7 @@ class DataPengembalianController extends Controller
             'quantity' => $request->quantity,
             'days' => $request->days,
             'total_price' => $request->total_price,
-]);
+        ]);
 
         //redirect to index
         return redirect()->route('data-pengembalian.index')->with(['success' => 'Data Berhasil Disimpan!']);
@@ -82,54 +77,53 @@ class DataPengembalianController extends Controller
         //render view with data
         return view('admin.edit-pengembalian', compact('data'));
     }
-public function update(Request $request, $id): RedirectResponse
-{
-    //validate form
-    $this->validate($request, [
-        'photo'         => 'image',
-        'product_name'  => 'required',
-        'product_description'  => 'required',
-        'price' => 'required',
-        'category1' => 'required',
-        'category2' => 'required',
-    ]);
-
-    //get post by ID
-    $data = Product::findOrFail($id);
-
-    //check if photo is uploaded
-    if ($request->hasFile('photo')) {
-
-        //upload new photo
-        $photo = $request->file('photo');
-        $photo->storeAs('public/posts', $image->hashName());
-
-        //delete old image
-        Storage::delete('public/posts/'.$data->photo);
-
-        //update post with new photo
-        $data->update([
-            'product_name' => $request->product_name,
-            'product_description' => $request->product_description,
-            'price' => $request->price,
-            'category1' => $request->category1,
-            'category2' => $request->category2,
-            'photo'     => $photo->hashName(),
+    public function update(Request $request, $id): RedirectResponse
+    {
+        //validate form
+        $this->validate($request, [
+            'photo'         => 'image',
+            'product_name'  => 'required',
+            'product_description'  => 'required',
+            'price' => 'required',
+            'category1' => 'required',
+            'category2' => 'required',
         ]);
 
-    } else {
+        //get post by ID
+        $data = Product::findOrFail($id);
 
-        //update post without photo
-        $data->update([
-        'product_name' => $request->product_name,
-        'product_description' => $request->product_description,
-        'price' => $request->price,
-        'category1' => $request->category1,
-        'category2' => $request->category2,
-        ]);
+        //check if photo is uploaded
+        if ($request->hasFile('photo')) {
+
+            //upload new photo
+            $photo = $request->file('photo');
+            $photo->storeAs('public/posts', $image->hashName());
+
+            //delete old image
+            Storage::delete('public/posts/' . $data->photo);
+
+            //update post with new photo
+            $data->update([
+                'product_name' => $request->product_name,
+                'product_description' => $request->product_description,
+                'price' => $request->price,
+                'category1' => $request->category1,
+                'category2' => $request->category2,
+                'photo'     => $photo->hashName(),
+            ]);
+        } else {
+
+            //update post without photo
+            $data->update([
+                'product_name' => $request->product_name,
+                'product_description' => $request->product_description,
+                'price' => $request->price,
+                'category1' => $request->category1,
+                'category2' => $request->category2,
+            ]);
+        }
+
+        //redirect to index
+        return redirect()->route('data-pengembalian.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
-
-    //redirect to index
-    return redirect()->route('data-pengembalian.index')->with(['success' => 'Data Berhasil Diubah!']);
-}
 }

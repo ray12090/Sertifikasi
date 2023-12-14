@@ -16,10 +16,10 @@
                                 <tr>
                                     <th
                                         class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
-                                        Product</th>
+                                        Status</th>
                                     <th
                                         class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
-                                        Price</th>
+                                        Product</th>
                                     <th
                                         class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
                                         Quantity</th>
@@ -31,10 +31,16 @@
                                         Return Date</th>
                                     <th
                                         class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
-                                        Total</th>
+                                        Price</th>
                                     <th
                                         class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
-                                        Actions</th>
+                                        Penalty</th>
+                                    <th
+                                        class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
+                                        Total</th>
+                                    {{-- <th
+                                        class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
+                                        Actions</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,10 +48,25 @@
                                     <tr>
                                         <td
                                             class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
-                                            {{ $order->product_name }}</td>
+                                            @if ($order->status == 1)
+                                                <form action="{{ route('update.order.status', $order->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button type="submit"
+                                                        class="text-white bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded">
+                                                        Mark as Returned
+                                                    </button>
+                                                </form>
+                                            @else
+                                                <button
+                                                    class="text-white bg-red-500 font-bold py-2 px-4 rounded">
+                                                    Returned
+                                            @endif
+                                        </td>
                                         <td
                                             class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
-                                            Rp{{ number_format($order->total_price, 2) }}</td>
+                                            {{ $order->product_name }}</td>
                                         <td
                                             class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
                                             {{ $order->quantity }}</td>
@@ -57,14 +78,13 @@
                                             {{ $order->return_date }}</td>
                                         <td
                                             class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
-                                            Rp{{ number_format($order->total_price, 2) }}</td>
+                                            Rp{{ number_format($order->price, 2) }}</td>
+                                        <td
+                                            class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-red-800 dark:text-red-600 text-center">
+                                            Rp{{ number_format($order->penalty, 2) }}</td>
                                         <td
                                             class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
-                                            <form action="{{ route('return.order', $order->id) }}" method="POST">
-                                                @csrf
-                                                <button type="submit"
-                                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">Return</button>
-                                            </form>
+                                            Rp{{ number_format($order->total_price, 2) }}</td>
                                         </td>
                                     </tr>
                                 @empty
@@ -91,9 +111,6 @@
                                         Product</th>
                                     <th
                                         class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
-                                        Price</th>
-                                    <th
-                                        class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
                                         Quantity</th>
                                     <td
                                         class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
@@ -101,6 +118,9 @@
                                     <td
                                         class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
                                         Return Date</td>
+                                    <th
+                                        class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
+                                        Price</th>
                                     <td
                                         class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
                                         Penalty</td>
@@ -139,7 +159,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="7"
+                                        <td colspan="8"
                                             class="font-bold p-4 pl-8 text-slate-800 dark:text-slate-800 text-center">No
                                             returned orders</td>
                                     </tr>

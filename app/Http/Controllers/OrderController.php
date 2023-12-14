@@ -20,29 +20,31 @@ class OrderController extends Controller
             $borrowDate = isset($details['borrow_date']) ? $details['borrow_date'] : Carbon::today()->toDateString();
             $returnDate = isset($details['return_date']) ? $details['return_date'] : Carbon::today()->addDays(1)->toDateString();
 
+            $currentDate = Carbon::today();
+            $penalty = 0;
+            if ($currentDate->gt($returnDate)) {
+                $daysLate = $currentDate->diffInDays($returnDate);
+                $penalty = 50000 * $daysLate;
+            }
+
             Order::create([
                 'user_id' => Auth::id(),
                 'product_id' => $productId,
+                'status' => 1,
                 'product_name' => $details['product_name'],
                 'quantity' => $details['quantity'],
                 'borrow_date' => $borrowDate,
                 'return_date' => $returnDate,
-                'total_price' => $details['price'] * $details['quantity']
-            ]);
-            Transactions::create([
-                'user_id' => Auth::id(),
-                'product_id' => $productId,
-                'product_name' => $details['product_name'],
-                'quantity' => $details['quantity'],
-                'borrow_date' => $borrowDate,
-                'return_date' => $returnDate,
-                'total_price' => $details['price'] * $details['quantity']
+                'price' => $details['price'] * $details['quantity'],
+                'penalty' => $penalty,
+                'total_price' => ($details['price'] * $details['quantity']) + $penalty,
             ]);
         }
 
         session()->forget('cart');
         return redirect()->route('home')->with('success', 'Checkout successful!');
     }
+
 
 
 
@@ -67,9 +69,22 @@ class OrderController extends Controller
     public function orders()
     {
         $orders = Order::where('user_id', Auth::id())->get();
+
+        foreach ($orders as $order) {
+            $returnDate = Carbon::parse($order->return_date);
+            $currentDate = Carbon::today();
+            $penalty = 0;
+            if ($currentDate->gt($returnDate)) {
+                $daysLate = $currentDate->diffInDays($returnDate);
+                $penalty = 50000 * $daysLate; // Replace 50000 with your penalty rate
+            }
+            $order->penalty = $penalty;
+        }
+
         $returnOrders = ReturnOrder::where('user_id', Auth::id())->get();
         return view('orders', compact('orders', 'returnOrders'));
     }
+
 
     public function returnOrder(Request $request, $orderId)
     {
@@ -92,5 +107,25 @@ class OrderController extends Controller
         $order->delete();
 
         return redirect()->route('orders')->with('success', 'Order returned successfully.');
+    }
+    public function updateOrderStatus($orderId)
+    {
+        $order = Order::findOrFail($orderId);
+        if ($order->status == 1) {
+            $order->status = 2;
+            $order->save();
+        }
+
+        return back()->with('success', 'Order status updated successfully.');
+    }
+    public function confirmReturn($orderId)
+    {
+        $order = Order::findOrFail($orderId);
+        if ($order->status == 2) {
+            $order->status = 3; // Status changed to Confirmed
+            $order->save();
+        }
+
+        return redirect()->route('data-pengembalian.index')->with('success', 'Return confirmed successfully.');
     }
 }

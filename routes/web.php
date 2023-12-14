@@ -44,10 +44,13 @@ Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout')
 
 // Your Orders
 Route::get('/orders', [OrderController::class, 'orders'])->middleware('auth')->name('orders');
+Route::put('/update-order-status/{orderId}', [OrderController::class, 'updateOrderStatus'])->name('update.order.status');
 
 
 // Return Order
-Route::post('/return-order/{orderId}', [OrderController::class, 'returnOrder'])->name('return.order');
+Route::post('/return-order/{orderId}', [OrderController::class, 'transaction'])->name('return.order');
+Route::put('/confirm-return/{orderId}', [OrderController::class, 'confirmReturn'])->name('confirm.return');
+
 
 // Profile
 Route::middleware('auth')->group(function () {
@@ -66,8 +69,8 @@ Route::resource('/data-user', \App\Http\Controllers\Admin\DataUserController::cl
 Route::resource('/data-produk', \App\Http\Controllers\Admin\DataProdukController::class);
 Route::resource('/data-transaksi', \App\Http\Controllers\Admin\DataTransaksiController::class);
 Route::resource('/data-pengembalian', \App\Http\Controllers\Admin\DataPengembalianController::class);
-Route::get('/data-pengembalian/{id}', [\App\Http\Controllers\Admin\DataPengembalianController::class, 'show'])->name('data-pengembalian.show');
-Route::delete('/data-pengembalian/{id}', [\App\Http\Controllers\Admin\DataPengembalianController::class, 'destroy'])->name('data-pengembalian.destroy');
+// Route::get('/data-pengembalian/{id}', [\App\Http\Controllers\Admin\DataPengembalianController::class, 'show'])->name('data-pengembalian.show');
+// Route::delete('/data-pengembalian/{id}', [\App\Http\Controllers\Admin\DataPengembalianController::class, 'destroy'])->name('data-pengembalian.destroy');
 Route::get('/admin/returns', [AdminDashboardController::class, 'returns'])->name('admin.returns');
 
 // Authentication Routes...

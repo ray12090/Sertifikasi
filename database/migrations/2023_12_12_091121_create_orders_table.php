@@ -15,10 +15,13 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('product_id');
+            $table->integer('status');
             $table->string('product_name');
             $table->integer('quantity');
             $table->date('borrow_date');
             $table->date('return_date');
+            $table->decimal('price', 10, 2);
+            $table->decimal('penalty', 10, 2);
             $table->decimal('total_price', 10, 2);
             $table->timestamps();
 

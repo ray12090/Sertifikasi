@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Order;
 use App\Models\Transactions;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -12,17 +13,23 @@ use Illuminate\Validation\Rules;
 
 class DataTransaksiController extends Controller
 {
-    public function index(): View
-    {
-        $data = Transactions::oldest()->paginate(5);
+    // public function index(): View
+    // {
+    //     $data = Transactions::oldest()->paginate(5);
 
-        return view('admin.datatransaksi', compact('data'));
-    }
+    //     return view('admin.datatransaksi', compact('data'));
+    // }
 
     // public function create(): View
     // {
     //     return view('admin.tambah-transaksi');
     // }
+
+    public function index()
+    {
+        $orders = Order::where('status', 3)->paginate(10);
+        return view('admin.datatransaksi', compact('orders'));
+    }
 
     public function store(Request $request): RedirectResponse
     {
