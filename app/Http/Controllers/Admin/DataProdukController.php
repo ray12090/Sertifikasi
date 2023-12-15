@@ -29,7 +29,7 @@ class DataProdukController extends Controller
     {
         //validate form
         $this->validate($request, [
-            'photo'         => 'required|image',
+            'photo'     => 'required|image|mimes:jpeg,jpg,png|max:2048',
             'product_name'  => 'required',
             'product_description'  => 'required',
             'price' => 'required',
@@ -39,20 +39,20 @@ class DataProdukController extends Controller
 
         //upload image
         $image = $request->file('photo');
-        $image->storeAs('public/posts', $image->hashName());
+        $image->storeAs('public/products', $image->hashName());
 
         //create post
         Product::create([
+            'photo'     => $image->hashName(),
             'product_name' => $request->product_name,
             'product_description' => $request->product_description,
             'price' => $request->price,
             'category1' => $request->category1,
             'category2' => $request->category2,
-            'photo'     => $image->hashName(),
-]);
+        ]);
 
         //redirect to index
-        return redirect()->route('data-produk.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('data-product.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
     public function show(string $id): View
@@ -103,10 +103,10 @@ public function update(Request $request, $id): RedirectResponse
 
         //upload new photo
         $photo = $request->file('photo');
-        $photo->storeAs('public/posts', $image->hashName());
+        // $photo->storeAs('public/posts', $image->hashName());
 
         //delete old image
-        Storage::delete('public/posts/'.$data->photo);
+        // Storage::delete('public/posts/'.$data->photo);
 
         //update post with new photo
         $data->update([
@@ -131,6 +131,6 @@ public function update(Request $request, $id): RedirectResponse
     }
 
     //redirect to index
-    return redirect()->route('data-produk.index')->with(['success' => 'Data Berhasil Diubah!']);
+    return redirect()->route('data-product.index')->with(['success' => 'Data Berhasil Diubah!']);
 }
 }

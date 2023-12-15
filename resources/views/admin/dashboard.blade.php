@@ -1,4 +1,4 @@
-@extends('admin.adminhome')
+@extends('admin.layouts.home')
 @section('content')
     <!-- Konten halaman Data User -->
     <!-- <div class="py-12">

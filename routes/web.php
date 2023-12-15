@@ -56,6 +56,8 @@ Route::put('/confirm-return/{orderId}', [OrderController::class, 'confirmReturn'
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile-admin', [ProfileController::class, 'editAdmin'])->name('profile.editadmin');
+    Route::patch('/profile-admin', [ProfileController::class, 'updateAdmin'])->name('profile.updateadmin');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
@@ -66,12 +68,12 @@ Route::middleware('auth')->group(function () {
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'admin']);
 // Route::get('/data-users', [DataUserController::class, 'index'])->middleware(['auth', 'admin']);
 Route::resource('/data-user', \App\Http\Controllers\Admin\DataUserController::class);
-Route::resource('/data-produk', \App\Http\Controllers\Admin\DataProdukController::class);
+Route::resource('/data-product', \App\Http\Controllers\Admin\DataProdukController::class);
 Route::resource('/data-transaksi', \App\Http\Controllers\Admin\DataTransaksiController::class);
 Route::resource('/data-pengembalian', \App\Http\Controllers\Admin\DataPengembalianController::class);
 // Route::get('/data-pengembalian/{id}', [\App\Http\Controllers\Admin\DataPengembalianController::class, 'show'])->name('data-pengembalian.show');
 // Route::delete('/data-pengembalian/{id}', [\App\Http\Controllers\Admin\DataPengembalianController::class, 'destroy'])->name('data-pengembalian.destroy');
-Route::get('/admin/returns', [AdminDashboardController::class, 'returns'])->name('admin.returns');
+Route::get('/admin/returns', [DashboardController::class, 'returns'])->name('admin.returns');
 
 // Authentication Routes...
 require __DIR__.'/auth.php';

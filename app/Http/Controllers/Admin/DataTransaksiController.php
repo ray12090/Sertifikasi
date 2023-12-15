@@ -8,26 +8,16 @@ use App\Models\Order;
 use App\Models\Transactions;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class DataTransaksiController extends Controller
 {
-    // public function index(): View
-    // {
-    //     $data = Transactions::oldest()->paginate(5);
-
-    //     return view('admin.datatransaksi', compact('data'));
-    // }
-
-    // public function create(): View
-    // {
-    //     return view('admin.tambah-transaksi');
-    // }
-
     public function index()
     {
-        $orders = Order::where('status', 3)->paginate(10);
+        $orders = Order::join('users', 'orders.user_id', '=', 'users.id')
+                ->select('orders.*', 'users.name as user_name') 
+                ->paginate(10);
+
         return view('admin.datatransaksi', compact('orders'));
     }
 
@@ -61,11 +51,19 @@ class DataTransaksiController extends Controller
 
     public function show(string $id): View
     {
-        //get data by ID
-        $data = Transactions::findOrFail($id);
-
-        //render view with data
-        return view('admin.detail-transaksi', compact('data'));
+        try {
+            // Get data by ID
+            $data = Order::join('products', 'orders.product_id', '=', 'products.id')
+                          ->join('users', 'orders.user_id', '=', 'users.id')
+                          ->select('orders.*', 'products.product_name', 'users.name as user_name')
+                          ->findOrFail($id);
+        
+            // Render view with data
+            return view('admin.detail-transaksi', compact('data'));
+        } catch (ModelNotFoundException $e) {
+            // Handle the case where the order with the specified ID is not found
+            return response()->view('errors.404', [], 404);
+        }
     }
 
     public function destroy($id): RedirectResponse
@@ -87,54 +85,5 @@ class DataTransaksiController extends Controller
         //render view with data
         return view('admin.edit-transaksi', compact('data'));
     }
-public function update(Request $request, $id): RedirectResponse
-{
-    //validate form
-    $this->validate($request, [
-        'photo'         => 'image',
-        'product_name'  => 'required',
-        'product_description'  => 'required',
-        'price' => 'required',
-        'category1' => 'required',
-        'category2' => 'required',
-    ]);
 
-    //get post by ID
-    $data = Product::findOrFail($id);
-
-    //check if photo is uploaded
-    if ($request->hasFile('photo')) {
-
-        //upload new photo
-        $photo = $request->file('photo');
-        $photo->storeAs('public/posts', $image->hashName());
-
-        //delete old image
-        Storage::delete('public/posts/'.$data->photo);
-
-        //update post with new photo
-        $data->update([
-            'product_name' => $request->product_name,
-            'product_description' => $request->product_description,
-            'price' => $request->price,
-            'category1' => $request->category1,
-            'category2' => $request->category2,
-            'photo'     => $photo->hashName(),
-        ]);
-
-    } else {
-
-        //update post without photo
-        $data->update([
-        'product_name' => $request->product_name,
-        'product_description' => $request->product_description,
-        'price' => $request->price,
-        'category1' => $request->category1,
-        'category2' => $request->category2,
-        ]);
-    }
-
-    //redirect to index
-    return redirect()->route('data-transaksi.index')->with(['success' => 'Data Berhasil Diubah!']);
-}
 }

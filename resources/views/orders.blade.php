@@ -60,8 +60,8 @@
                                                 </form>
                                             @else
                                                 <button
-                                                    class="text-white bg-red-500 font-bold py-2 px-4 rounded">
-                                                    Returned
+                                                    class="text-black bg-yellow-300 font-bold py-2 px-4 rounded">
+                                                    Process Return
                                             @endif
                                         </td>
                                         <td
@@ -84,6 +84,7 @@
                                             Rp{{ number_format($order->penalty, 2) }}</td>
                                         <td
                                             class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
+
                                             Rp{{ number_format($order->total_price, 2) }}</td>
                                         </td>
                                     </tr>
@@ -103,9 +104,9 @@
                         <table class="w-full text-sm">
                             <thead>
                                 <tr>
-                                    <th
+                                    <!-- <th
                                         class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
-                                        Status</th>
+                                        Status</th> -->
                                     <th
                                         class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
                                         Product</th>
@@ -132,15 +133,17 @@
                             <tbody>
                                 @forelse($returnOrders as $returnOrder)
                                     <tr>
-                                        <td
-                                            class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-green-800 dark:text-green-600 text-center">
-                                            Telat</td>
+                                        <!-- <td
+                                            class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-center">
+                                            @if ($returnOrder->penalty <= 0)
+                                                <p class="text-green-700">Tepat Waktu</p>
+                                            @else 
+                                                <p class="text-red-600">Telat</p>
+                                            @endif
+                                        </td> -->
                                         <td
                                             class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
                                             {{ $returnOrder->product_name }}</td>
-                                        <td
-                                            class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
-                                            Rp{{ number_format($returnOrder->total_price, 2) }}</td>
                                         <td
                                             class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
                                             {{ $returnOrder->quantity }}</td>
@@ -151,8 +154,11 @@
                                             class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
                                             {{ $returnOrder->return_date }}</td>
                                         <td
-                                            class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-red-800 dark:text-red-600 text-center">
+                                            class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
                                             Rp{{ number_format($returnOrder->total_price, 2) }}</td>
+                                        <td
+                                            class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-red-800 dark:text-red-600 text-center">
+                                            Rp{{ number_format($returnOrder->penalty, 2) }}</td>
                                         <td
                                             class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
                                             Rp{{ number_format($returnOrder->total_price, 2) }}</td>

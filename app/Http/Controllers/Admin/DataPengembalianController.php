@@ -10,12 +10,31 @@ use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Carbon\Carbon;
 
 class DataPengembalianController extends Controller
 {
     public function index()
-    {
-        $orders = Order::where('status', 2)->paginate(10); // Adjust pagination as needed
+    {     
+        $orders = Order::join('users', 'orders.user_id', '=', 'users.id')
+                ->where('orders.status', 2)
+                ->select('orders.*', 'users.name as user_name') 
+                ->paginate(10);
+
+        $currentDate = Carbon::now(); 
+
+        foreach ($orders as $order) {
+            $returnDate = Carbon::parse($order->return_date);
+            $borrowDate = Carbon::parse($order->borrow_date);
+
+            // Menambahkan kondisi untuk memeriksa apakah return_date lebih dari hari ini
+            // dan selisih antara borrow_date dan return_date lebih dari 5 hari
+            if ($returnDate->greaterThan($currentDate) || $borrowDate->diffInDays($returnDate) < 5) {
+                $order->bayar = true; 
+            } else {
+                $order->bayar = false;
+            }
+        }
         return view('admin.datapengembalian', compact('orders'));
     }
 
@@ -90,30 +109,10 @@ class DataPengembalianController extends Controller
         ]);
 
         //get post by ID
-        $data = Product::findOrFail($id);
+        $data = Order::findOrFail($id);
 
         //check if photo is uploaded
-        if ($request->hasFile('photo')) {
 
-            //upload new photo
-            $photo = $request->file('photo');
-            $photo->storeAs('public/posts', $image->hashName());
-
-            //delete old image
-            Storage::delete('public/posts/' . $data->photo);
-
-            //update post with new photo
-            $data->update([
-                'product_name' => $request->product_name,
-                'product_description' => $request->product_description,
-                'price' => $request->price,
-                'category1' => $request->category1,
-                'category2' => $request->category2,
-                'photo'     => $photo->hashName(),
-            ]);
-        } else {
-
-            //update post without photo
             $data->update([
                 'product_name' => $request->product_name,
                 'product_description' => $request->product_description,
@@ -121,7 +120,6 @@ class DataPengembalianController extends Controller
                 'category1' => $request->category1,
                 'category2' => $request->category2,
             ]);
-        }
 
         //redirect to index
         return redirect()->route('data-pengembalian.index')->with(['success' => 'Data Berhasil Diubah!']);

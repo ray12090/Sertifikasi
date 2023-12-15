@@ -13,20 +13,35 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
-
-    <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100">
-        @include('admin.navigation')
-        <div class="flex h-screen bg-gray-50 dark:bg-gray-100" :class="{ 'overflow-hidden': isSideMenuOpen }">
-            @include('admin.sidebar')
-            <div>
-                @yield('content')
+    @include('admin.layouts.navigation')
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                <div class="max-w-xl">
+                    @include('profile.partialsadmin.update-profile-information-form')
+                </div>
             </div>
+
+            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                <div class="max-w-xl">
+                    @include('profile.partialsadmin.update-password-form')
+                </div>
+            </div>
+
+            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                <div class="max-w-xl">
+                    @include('profile.partialsadmin.delete-user-form')
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 

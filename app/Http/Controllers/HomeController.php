@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -31,8 +32,11 @@ class HomeController extends Controller
 
                 return view('rental', compact('products', 'categories'));
             } else if ($usertype == 'admin') {
-                // return view('admin.dashboard');
-                return view('admin.adminhome');
+                $jumlahProduct = Product::jumlahProduct();
+                $jumlahUser = User::jumlahUser();
+                $totalPrice = Order::totalOrderPrice();
+
+                return view('admin.dashboard', compact('jumlahProduct','jumlahUser','totalPrice'));
             } else {
                 return redirect()->back();
             }

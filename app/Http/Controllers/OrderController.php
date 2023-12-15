@@ -68,7 +68,9 @@ class OrderController extends Controller
 
     public function orders()
     {
-        $orders = Order::where('user_id', Auth::id())->get();
+        $orders = Order::where('user_id', Auth::id())
+        ->whereIn('status', [1, 2])
+        ->get();
 
         foreach ($orders as $order) {
             $returnDate = Carbon::parse($order->return_date);
@@ -80,8 +82,9 @@ class OrderController extends Controller
             }
             $order->penalty = $penalty;
         }
-
-        $returnOrders = ReturnOrder::where('user_id', Auth::id())->get();
+        $returnOrders = Order::where('user_id', Auth::id())
+        ->where('status', 3)
+        ->get();
         return view('orders', compact('orders', 'returnOrders'));
     }
 

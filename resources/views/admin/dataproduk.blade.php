@@ -1,23 +1,23 @@
-@extends('admin.adminhome')
+@extends('admin.layouts.home')
 @section('content')
-    <div class="container grid px-6 mx-auto" style="width:1000px">
+    <div class="container grid px-6 mx-auto">
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-800">
-            Data Produk
+            Data Product
         </h2>
-        <a class="w-48 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-            href="{{ route('data-produk.create') }}">
-            Tambah Produk
-            <span class="ml-2" aria-hidden="true">+</span>
+        <a class="w-44 px-4 py-2 no-underline text-sm text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple hover:no-underline"
+            href="{{ route('data-product.create') }}">
+            Create Product
+            <span class="float-right">+</span>
         </a>
-        <div class="w-full overflow-hidden rounded-lg shadow-xs">
-            <div class="w-full overflow-x-auto">
-                <table class="w-full whitespace-no-wrap ">
+        <div class="rounded-lg shadow-xs">
+            <table class="" style="width: 900px;">
                     <thead>
                         <tr
                             class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                             <th class="px-4 py-3">No</th>
-                            <th class="px-4 py-3">Nama Produk</th>
-                            <th class="px-4 py-3">Harga</th>
+                            <th class="px-4 py-3">Image Product</th>
+                            <th class="px-4 py-3">Product Name</th>
+                            <th class="px-4 py-3">Price</th>
                             <th class="px-4 py-3">Actions</th>
                         </tr>
                     </thead>
@@ -33,6 +33,13 @@
                                         </div>
                                     </div>
                                 </td>
+                                <td class="text-center">
+                                    @if($post->photo)
+                                    <img src="{{ asset('/products/dummy.jpg') }}" class="rounded" style="width: 100px">
+                                    @else
+                                    <img src="{{ asset('/products/dummy.jpg') }}" class="rounded" style="width: 100px">
+                                    @endif
+                                </td>
                                 <td>
                                     <div>
                                         <p class="font-semibold">{{ $post->product_name }}</p>
@@ -43,7 +50,7 @@
                                 </td>
                                 <td class="px-4 py-3">
                                     <div class="flex items-center space-x-4 text-sm">
-                                        <a href="{{ route('data-produk.show', $post->id) }}"
+                                        <a href="{{ route('data-product.show', $post->id) }}"
                                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-500 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                             aria-label="Show">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -55,7 +62,7 @@
                                             </svg>
 
                                         </a>
-                                        <a href="{{ route('data-produk.edit', $post->id) }}"
+                                        <a href="{{ route('data-product.edit', $post->id) }}"
                                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-yellow-500 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                             aria-label="Edit">
                                             <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
@@ -64,7 +71,7 @@
                                                 </path>
                                             </svg>
                                         </a>
-                                        <form action="{{ route('data-produk.destroy', $post->id) }}" method="post">
+                                        <form action="{{ route('data-product.destroy', $post->id) }}" method="post" class="mt-3">
                                             @csrf
                                             @method('DELETE')
                                             <button
@@ -88,8 +95,8 @@
                         @endforelse
                     </tbody>
                 </table>
+                <br>
                 {{ $data->links() }}
-            </div>
         </div>
     </div>
 @endsection

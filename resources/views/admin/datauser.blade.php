@@ -1,21 +1,21 @@
-@extends('admin.adminhome')
+@extends('admin.layouts.home')
 @section('content')
-    <div class="container grid px-6 mx-auto" style="width:1000px">
+<div class="container grid px-6 mx-auto">
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-800">
             Data User
         </h2>
-        <a class="w-48 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+        <a class="w-44 px-4 py-2 no-underline text-sm text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple hover:no-underline"
             href="{{ route('data-user.create') }}">
             Create account
-            <span class="ml-2" aria-hidden="true">+</span>
+            <span class="float-right">+</span>
         </a>
-        <div class="w-full overflow-hidden rounded-lg shadow-xs">
-            <div class="w-full overflow-x-auto">
-                <table class="w-full whitespace-no-wrap ">
+        <div class="rounded-lg shadow-xs">
+        <table class="" style="width: 900px;">
                     <thead>
                         <tr
                             class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                            <th class="px-4 py-3">Nama Pelanggan</th>
+                            <!-- #New -->
+                            <th class="px-4 py-3">User Name</th>
                             <th class="px-4 py-3">Email</th>
                             <th class="px-4 py-3">Actions</th>
                         </tr>
@@ -37,8 +37,12 @@
                                         </div>
                                         <div>
                                             <p class="font-semibold">{{ $post->name }}</p>
-                                            <p class="text-xs text-gray-600 dark:text-gray-600">
-                                                {{ $post->usertype }}
+                                            <p class="text-xs text-red-600 dark:text-red-600">
+                                            @if ($post->usertype == 'user')
+                                                Pelanggan
+                                            @else
+                                                Admin
+                                            @endif
                                             </p>
                                         </div>
                                     </div>
@@ -69,7 +73,7 @@
                                                 </path>
                                             </svg>
                                         </a>
-                                        <form action="{{ route('data-user.destroy', $post->id) }}" method="post">
+                                        <form action="{{ route('data-user.destroy', $post->id) }}" method="post" class="mt-3">
                                             @csrf
                                             @method('DELETE')
                                             <button
@@ -93,8 +97,8 @@
                         @endforelse
                     </tbody>
                 </table>
+                <br>
                 {{ $data->links() }}
-            </div>
         </div>
     </div>
 @endsection
