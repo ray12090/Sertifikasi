@@ -30,6 +30,7 @@
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
                 required autocomplete="username" />
+            <span id="emailError" class="text-sm text-red-600"></span>
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
@@ -38,6 +39,7 @@
             <x-input-label for="no_hp" :value="__('Phone Number')" />
             <x-text-input id="no_hp" class="block mt-1 w-full" type="tel" name="no_hp" :value="old('no_hp')"
                 required pattern="\d*" title="Phone number should only contain numbers." />
+            <span id="phoneError" class="text-sm text-red-600"></span>
             <x-input-error :messages="$errors->get('no_hp')" class="mt-2" />
         </div>
 
@@ -101,30 +103,44 @@
                 {{ __('Already registered?') }}
             </a>
 
-            <x-primary-button class="ms-4"
-               href="{{ route('login') }}">
+            <x-primary-button class="ms-4" href="{{ route('login') }}">
                 {{ __('Register') }}
             </x-primary-button>
         </div>
     </form>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const provinsiSelect = document.getElementById('provinsi');
-            const kabupatenSelect = document.getElementById('kabupaten');
+        document.addEventListener('DOMContentLoaded', function() {
+            const emailInput = document.getElementById('email');
+            const phoneInput = document.getElementById('no_hp');
+            const emailError = document.getElementById('emailError');
+            const phoneError = document.getElementById('phoneError');
 
-            provinsiSelect.addEventListener('change', function () {
-                fetch(`/get-kabupaten/${this.value}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        kabupatenSelect.innerHTML = '<option value="">Select District</option>';
-                        data.forEach(kabupaten => {
-                            kabupatenSelect.innerHTML += `<option value="${kabupaten.id}">${kabupaten.nama_kabupaten}</option>`;
-                        });
-                        kabupatenSelect.disabled = false; // Enable the kabupaten select
-                    })
-                    .catch(error => console.error(error));
+            emailInput.addEventListener('input', function() {
+                if (!validateEmail(this.value)) {
+                    emailError.textContent = 'Please enter a valid email.';
+                } else {
+                    emailError.textContent = '';
+                }
             });
+
+            phoneInput.addEventListener('input', function() {
+                if (!validatePhone(this.value)) {
+                    phoneError.textContent = 'Phone number should only contain numbers.';
+                } else {
+                    phoneError.textContent = '';
+                }
+            });
+
+            function validateEmail(email) {
+                const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+                return re.test(String(email).toLowerCase());
+            }
+
+            function validatePhone(phone) {
+                const re = /^\d+$/;
+                return re.test(phone);
+            }
         });
     </script>
 

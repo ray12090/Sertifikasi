@@ -15,13 +15,13 @@ use Carbon\Carbon;
 class DataPengembalianController extends Controller
 {
     public function index()
-    {     
+    {
         $orders = Order::join('users', 'orders.user_id', '=', 'users.id')
                 ->where('orders.status', 2)
-                ->select('orders.*', 'users.name as user_name') 
+                ->select('orders.*', 'users.name as user_name')
                 ->paginate(10);
 
-        $currentDate = Carbon::now(); 
+        $currentDate = Carbon::now();
 
         foreach ($orders as $order) {
             $returnDate = Carbon::parse($order->return_date);
@@ -30,7 +30,7 @@ class DataPengembalianController extends Controller
             // Menambahkan kondisi untuk memeriksa apakah return_date lebih dari hari ini
             // dan selisih antara borrow_date dan return_date lebih dari 5 hari
             if ($returnDate->greaterThan($currentDate) || $borrowDate->diffInDays($returnDate) < 5) {
-                $order->bayar = true; 
+                $order->bayar = true;
             } else {
                 $order->bayar = false;
             }

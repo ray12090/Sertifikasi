@@ -81,7 +81,7 @@
                                 </div>
                             @enderror
                         </label>
-                        
+
                         <label class="block text-sm mt-4">
                             <span class="text-gray-700 dark:text-gray-400 font-bold">Agama</span>
                             <input type="email"

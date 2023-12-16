@@ -18,6 +18,7 @@
                             <th class="px-4 py-3">Image Product</th>
                             <th class="px-4 py-3">Product Name</th>
                             <th class="px-4 py-3">Price</th>
+                            <th class="px-4 py-3">Stock</th>
                             <th class="px-4 py-3">Actions</th>
                         </tr>
                     </thead>
@@ -47,6 +48,9 @@
                                 </td>
                                 <td class="px-4 py-3 text-sm">
                                     Rp{{ $post->price }}
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    {{ $post->stock }}
                                 </td>
                                 <td class="px-4 py-3">
                                     <div class="flex items-center space-x-4 text-sm">
@@ -102,11 +106,11 @@
             //message with toastr
             @if(session()->has('success'))
 
-                toastr.success('{{ session('success') }}', 'BERHASIL!'); 
+                toastr.success('{{ session('success') }}', 'BERHASIL!');
 
             @elseif(session()->has('error'))
 
-                toastr.error('{{ session('error') }}', 'GAGAL!'); 
+                toastr.error('{{ session('error') }}', 'GAGAL!');
 
             @endif
         </script>

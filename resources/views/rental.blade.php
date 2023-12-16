@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Selamat Menyewa, ')}}{{ Auth::user()->name }}
+            {{ __('Selamat Menyewa, ') }}{{ Auth::user()->name }}
         </h2>
     </x-slot>
 
@@ -30,22 +30,30 @@
                             <div class="p-4 flex-grow">
                                 <h3 class="font-bold text-xl mb-2">{{ $product->product_name }}</h3>
                                 <p class="text-gray-700 mb-4">{{ $product->product_description }}</p>
-                                <p class="text-gray-900 font-bold text-lg px-6 py-4" align="right">Price: Rp{{ number_format($product->price, 2) }}
+                                <!-- Stock display -->
+                                <p class="text-gray-900 font-bold mb-4">Stock: {{ $product->stock }}</p>
+
+                                <p class="text-gray-900 font-bold text-lg px-6 py-4" align="right">
+                                    Price: Rp{{ number_format($product->price, 2) }}
                                 </p>
 
-                                <form action="{{ route('additem.to.cart', $product->id) }}" method="POST" align="right">
+                                <form action="{{ route('additem.to.cart', $product->id) }}" method="POST"
+                                    align="right">
                                     @csrf
                                     <label for="quantity-{{ $product->id }}" align="right">Jumlah:</label>
                                     <input type="number" name="quantity" min="1" max="2" value="1"
-                                        class="p-1 pl-2 w-10" />
+                                        class="p-1 pl-2 w-10" oninput="checkQuantity(this)" />
 
                                     <button type="submit"
-                                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full" align="right">Add
+                                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"
+                                        align="right">Add
                                         to Cart</button>
                                 </form>
                                 <div class="px-6 pt-4 pb-2">
-                                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 mr-2 mb-2">#{{ $product->category1 }}</span>
-                                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 mr-2 mb-2">#{{ $product->category2 }}</span>
+                                    <span
+                                        class="inline-block bg-gray-200 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 mr-2 mb-2">#{{ $product->category1 }}</span>
+                                    <span
+                                        class="inline-block bg-gray-200 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 mr-2 mb-2">#{{ $product->category2 }}</span>
                                 </div>
                             </div>
                         </div>
@@ -56,4 +64,14 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function checkQuantity(element) {
+            if (element.value > 2) {
+                alert('The maximum quantity is 2.');
+                element.value = 2;
+            }
+        }
+    </script>
+
 </x-app-layout>

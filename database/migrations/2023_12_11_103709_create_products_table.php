@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('price', 8, 2);
             $table->string('category1')->nullable();
             $table->string('category2')->nullable();
+            $table->integer('stock');
             $table->timestamps();
         });
     }

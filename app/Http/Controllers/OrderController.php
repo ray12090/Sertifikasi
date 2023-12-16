@@ -34,6 +34,10 @@ class OrderController extends Controller
             $pricePerDay = $details['price'];
             $totalPrice = $pricePerDay * $details['quantity'] * $rentalDays + $penalty;
 
+            $product = Product::find($productId);
+            $product->stock -= $details['quantity'];
+            $product->save();
+
             Order::create([
                 'user_id' => Auth::id(),
                 'product_id' => $productId,
@@ -135,6 +139,11 @@ class OrderController extends Controller
         if ($order->status == 2) {
             $order->status = 3; // Status changed to Confirmed
             $order->save();
+
+            // Increase stock
+            $product = Product::find($order->product_id);
+            $product->stock += $order->quantity;
+            $product->save();
         }
 
         return redirect()->route('data-pengembalian.index')->with('success', 'Return confirmed successfully.');

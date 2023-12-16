@@ -24,6 +24,7 @@ class ProductSeeder extends Seeder
             'price' => 20000,
             'category1' => 'Tempat Tinggal',
             'category2' => 'Perlindungan',
+            'stock' => 10,
         ]);
 
         // Hammock
@@ -34,6 +35,7 @@ class ProductSeeder extends Seeder
             'price' => 5000,
             'category1' => 'Tempat Tinggal',
             'category2' => 'Relaksasi',
+            'stock' => 10,
         ]);
 
         // Flysheet
@@ -44,6 +46,7 @@ class ProductSeeder extends Seeder
             'price' => 5000,
             'category1' => 'Perlindungan',
             'category2' => 'Tempat Tinggal',
+            'stock' => 10,
         ]);
 
         // Alat Masak dan Makan
@@ -55,6 +58,7 @@ class ProductSeeder extends Seeder
             'price' => 5000,
             'category1' => 'Alat Masak',
             'category2' => 'Peralatan Esensial',
+            'stock' => 10,
         ]);
 
         // Peralatan Memasak
@@ -65,6 +69,7 @@ class ProductSeeder extends Seeder
             'price' => 5000,
             'category1' => 'Alat Masak',
             'category2' => 'Peralatan Esensial',
+            'stock' => 10,
         ]);
 
         // Peralatan Makan
@@ -75,6 +80,7 @@ class ProductSeeder extends Seeder
             'price' => 5000,
             'category1' => 'Alat Makan',
             'category2' => 'Peralatan Esensial',
+            'stock' => 10,
         ]);
 
         // Tidur dan Kenyamanan
@@ -86,6 +92,7 @@ class ProductSeeder extends Seeder
             'price' => 5000,
             'category1' => 'Perlengkapan Tidur',
             'category2' => 'Perlindungan',
+            'stock' => 10,
         ]);
 
         // Matras
@@ -96,6 +103,7 @@ class ProductSeeder extends Seeder
             'price' => 5000,
             'category1' => 'Perlengkapan Tidur',
             'category2' => 'Kenyamanan',
+            'stock' => 10,
         ]);
 
         // Bantal Camping
@@ -106,6 +114,7 @@ class ProductSeeder extends Seeder
             'price' => 5000,
             'category1' => 'Perlengkapan Tidur',
             'category2' => 'Kenyamanan',
+            'stock' => 10,
         ]);
 
         // Peralatan Pencahayaan
@@ -117,6 +126,7 @@ class ProductSeeder extends Seeder
             'price' => 10000,
             'category1' => 'Pencahayaan',
             'category2' => 'Keselamatan',
+            'stock' => 10,
         ]);
 
         // Senter
@@ -127,6 +137,7 @@ class ProductSeeder extends Seeder
             'price' => 5000,
             'category1' => 'Pencahayaan',
             'category2' => 'Keselamatan',
+            'stock' => 10,
         ]);
 
         // Headlamp
@@ -137,6 +148,7 @@ class ProductSeeder extends Seeder
             'price' => 10000,
             'category1' => 'Pencahayaan',
             'category2' => 'Keselamatan',
+            'stock' => 10,
         ]);
 
         // Alat Navigasi dan Keselamatan
@@ -148,6 +160,7 @@ class ProductSeeder extends Seeder
             'price' => 1000,
             'category1' => 'Navigasi',
             'category2' => 'Keselamatan',
+            'stock' => 10,
         ]);
 
         // Peta
@@ -158,6 +171,7 @@ class ProductSeeder extends Seeder
             'price' => 1000,
             'category1' => 'Navigasi',
             'category2' => 'Peralatan Esensial',
+            'stock' => 10,
         ]);
 
         // Alat Komunikasi (walkie-talkie)
@@ -168,6 +182,7 @@ class ProductSeeder extends Seeder
             'price' => 5000,
             'category1' => 'Komunikasi',
             'category2' => 'Keselamatan',
+            'stock' => 10,
         ]);
 
         // Pakaian dan Perlengkapan Pribadi
@@ -179,6 +194,7 @@ class ProductSeeder extends Seeder
             'price' => 5000,
             'category1' => 'Pakaian',
             'category2' => 'Perlindungan',
+            'stock' => 10,
         ]);
 
         // Sepatu Hiking
@@ -189,6 +205,7 @@ class ProductSeeder extends Seeder
             'price' => 5000,
             'category1' => 'Pakaian',
             'category2' => 'Keselamatan',
+            'stock' => 10,
         ]);
 
         // Perlengkapan Tambahan
@@ -200,6 +217,7 @@ class ProductSeeder extends Seeder
             'price' => 10000,
             'category1' => 'Penyimpanan',
             'category2' => 'Peralatan Esensial',
+            'stock' => 10,
         ]);
 
         // Cooler/Box Pendingin
@@ -210,6 +228,7 @@ class ProductSeeder extends Seeder
             'price' => 10000,
             'category1' => 'Penyimpanan',
             'category2' => 'Alat Makan',
+            'stock' => 10,
         ]);
 
         // Powerbank
@@ -220,6 +239,7 @@ class ProductSeeder extends Seeder
             'price' => 5000,
             'category1' => 'Penyimpanan Energi',
             'category2' => 'Elektronik',
+            'stock' => 10,
         ]);
     }
 }
