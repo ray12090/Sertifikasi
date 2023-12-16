@@ -19,7 +19,6 @@ class DataProdukController extends Controller
 
         return view('admin.dataproduk', compact('data'));
     }
-
     public function create(): View
     {
         return view('admin.tambah-produk');
@@ -73,7 +72,7 @@ class DataProdukController extends Controller
         $data->delete();
 
         //redirect to index
-        return redirect()->route('data-produk.index');
+        return redirect()->route('data-product.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
     public function edit(string $id): View
     {

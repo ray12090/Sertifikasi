@@ -4,17 +4,17 @@
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-800">
             Data Product
         </h2>
-        <a class="w-44 px-4 py-2 no-underline text-sm text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple hover:no-underline"
+        <a class="ml-auto w-44 px-4 py-2 no-underline text-sm text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple hover:no-underline"
             href="{{ route('data-product.create') }}">
             Create Product
             <span class="float-right">+</span>
         </a>
-        <div class="rounded-lg shadow-xs">
+        <div class="rounded-lg shadow-xs mt-3">
             <table class="" style="width: 900px;">
                     <thead>
                         <tr
                             class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                            <th class="px-4 py-3">No</th>
+                            <th class="px-4 py-3">ID</th>
                             <th class="px-4 py-3">Image Product</th>
                             <th class="px-4 py-3">Product Name</th>
                             <th class="px-4 py-3">Price</th>
@@ -88,15 +88,33 @@
                                     </div>
                                 </td>
                             </tr>
-                        @empty
-                            <div class="alert alert-danger">
-                                Produk belum Tersedia.
-                            </div>
-                        @endforelse
+                            @empty
+                                  <div class="alert alert-danger">
+                                      Data Post belum Tersedia.
+                                  </div>
+                            @endforelse
                     </tbody>
                 </table>
                 <br>
                 {{ $data->links() }}
         </div>
-    </div>
+        <script>
+            //message with toastr
+            @if(session()->has('success'))
+
+                toastr.success('{{ session('success') }}', 'BERHASIL!'); 
+
+            @elseif(session()->has('error'))
+
+                toastr.error('{{ session('error') }}', 'GAGAL!'); 
+
+            @endif
+        </script>
 @endsection
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+</div>
