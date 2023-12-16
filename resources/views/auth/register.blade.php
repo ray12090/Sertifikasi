@@ -101,7 +101,8 @@
                 {{ __('Already registered?') }}
             </a>
 
-            <x-primary-button class="ms-4">
+            <x-primary-button class="ms-4"
+               href="{{ route('login') }}">
                 {{ __('Register') }}
             </x-primary-button>
         </div>

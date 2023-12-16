@@ -23,23 +23,6 @@
                             @enderror
                         </label>
 
-                        <label class="block mt-4 text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">
-                                UserType
-                            </span>
-                            <select name="usertype"
-                                class="@error('usertype') is-invalid @enderror block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                <option>-- Pilih Level --</option>
-                                <option value="admin">Admin</option>
-                                <option value="user">User</option>
-                            </select>
-                            @error('usertype')
-                                <div class="alert alert-danger mt-2">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </label>
-
                         <label class="block text-sm mt-4">
                             <span class="text-gray-700 dark:text-gray-400">Email</span>
                             <input type="email"
@@ -62,6 +45,72 @@
                                 </div>
                             @enderror
                         </label>
+
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400 font-bold">No HP</span>
+                            <input type="text"
+                               class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input @error('no_hp') is-invalid @enderror"
+                                name="no_hp" value="{{ old('no_hp') }}" placeholder="Masukkan No HP">
+                            @error('no_hp')
+                                <div class="alert alert-danger mt-2">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </label>
+
+                        <label class="block text-sm mt-4">
+                            <span class="text-gray-700 dark:text-gray-400 font-bold">Provinsi</span>
+                            <input type="text"
+                               class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input @error('provinsi_id') is-invalid @enderror"
+                                name="provinsi_id" value="{{ old('provinsi_id') }}" placeholder="Masukkan Provinsi">
+                            @error('provinsi_id')
+                                <div class="alert alert-danger mt-2">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </label>
+
+                        <label class="block text-sm mt-4">
+                            <span class="text-gray-700 dark:text-gray-400 font-bold">Kabupaten</span>
+                            <input type="text"
+                               class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input @error('kabupaten_id') is-invalid @enderror"
+                                name="kabupaten_id" value="{{ old('kabupaten_id') }}" placeholder="Masukkan Kabupaten">
+                            @error('kabupaten_id')
+                                <div class="alert alert-danger mt-2">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </label>
+                        
+                        <label class="block text-sm mt-4">
+                            <span class="text-gray-700 dark:text-gray-400 font-bold">Agama</span>
+                            <input type="email"
+                               class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input @error('agama_id') is-invalid @enderror"
+                                name="agama_id" value="{{ old('agama_id') }}" placeholder="Masukkan Agama">
+                            @error('agama_id')
+                                <div class="alert alert-danger mt-2">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </label>
+
+                        <label class="block mt-4 text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">
+                                UserType
+                            </span>
+                            <select name="usertype"
+                                class="@error('usertype') is-invalid @enderror block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                <option>-- Pilih Level --</option>
+                                <option value="admin">Admin</option>
+                                <option value="user">User</option>
+                            </select>
+                            @error('usertype')
+                                <div class="alert alert-danger mt-2">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </label>
+
                         <div class="mt-8">
                             <button type="submit" id="submitBtn" class="w-36 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">Submit</button>
                             <button type="reset"

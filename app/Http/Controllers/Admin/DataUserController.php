@@ -32,6 +32,10 @@ class DataUserController extends Controller
         $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],            'password' => ['required'],
+            'no_hp' => ['required', 'string', 'max:20'],
+            'provinsi_id' => ['required', 'string', 'max:20'],
+            'kabupaten_id' => ['required', 'string', 'max:20'],
+            'agama_id' => ['required', 'string', 'max:20'],          
             'usertype' => ['required'],
         ]);
 
@@ -39,6 +43,10 @@ class DataUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'no_hp' => $request->no_hp,
+            'provinsi_id' => $request->provinsi_id,
+            'kabupaten_id' => $request->kabupaten_id,
+            'agama_id' => $request->agama_id,     
             'usertype' => $request->usertype,
         ]);
 
@@ -79,6 +87,10 @@ class DataUserController extends Controller
         $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
+            'no_hp' => ['required', 'string', 'max:20'],
+            'provinsi_id' => ['required', 'string', 'max:20'],
+            'kabupaten_id' => ['required', 'string', 'max:20'],
+            'agama_id' => ['required', 'string', 'max:20'],            
         ]);
 
         //get data by ID
@@ -87,6 +99,10 @@ class DataUserController extends Controller
             $data->update([
             'name' => $request->name,
             'email' => $request->email,
+            'no_hp' => $request->no_hp,
+            'provinsi_id' => $request->provinsi_id,
+            'kabupaten_id' => $request->kabupaten_id,
+            'agama_id' => $request->agama_id,     
             ]);
 
         //redirect to index

@@ -35,6 +35,58 @@
                                 </div>
                             @enderror
                         </label>
+                        
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">No HP</span>
+                            <input type="text"
+                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input @error('no_hp') is-invalid @enderror"
+                                name="no_hp" value="{{ old('title', $data->no_hp) }}" placeholder="Masukkan No Hp Baru>
+
+                            @error('no_hp')
+                                <div class="alert alert-danger mt-2">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </label>
+
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Provinsi</span>
+                            <input type="text"
+                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input @error('provinsi_id') is-invalid @enderror"
+                                name="provinsi_id" value="{{ old('title', $data->provinsi_id) }}" placeholder="Masukkan Nama Lengkap">
+
+                            @error('provinsi_id')
+                                <div class="alert alert-danger mt-2">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </label>        
+                        
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Kabupaten</span>
+                            <input type="text"
+                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input @error('kabupaten_id') is-invalid @enderror"
+                                name="kabupaten_id" value="{{ old('title', $data->kabupaten_id) }}" placeholder="Masukkan Nama Lengkap">
+
+                            @error('kabupaten_id')
+                                <div class="alert alert-danger mt-2">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </label>
+
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Agama</span>
+                            <input type="text"
+                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input @error('agama_id') is-invalid @enderror"
+                                name="agama_id" value="{{ old('title', $data->agama_id) }}" placeholder="Masukkan Nama Lengkap">
+
+                            @error('agama_id')
+                                <div class="alert alert-danger mt-2">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </label>                        
 
                         <div class="mt-8">
                             <button type="submit"

@@ -28,6 +28,34 @@
                             name="name" disabled value="{{ $data->email }}">
                     </label>
 
+                    <label class="block text-sm">
+                        <span class="text-gray-700 dark:text-gray-400 font-bold">No HP</span>
+                        <input type="text"
+                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-green-400 focus:outline-none focus:shadow-outline-green dark:text-gray-300 dark:focus:shadow-outline-gray"
+                            name="name" disabled value="{{ $data->no_hp }}">
+                    </label>
+
+                    <label class="block text-sm mt-4">
+                        <span class="text-gray-700 dark:text-gray-400 font-bold">Provinsi</span>
+                        <input type="text"
+                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
+                            name="name" disabled value="{{ $data->provinsi_id }}">
+                    </label>
+
+                    <label class="block text-sm mt-4">
+                        <span class="text-gray-700 dark:text-gray-400 font-bold">Kabupaten</span>
+                        <input type="email"
+                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
+                            name="name" disabled value="{{ $data->kabupaten_id }}">
+                    </label>
+                    
+                    <label class="block text-sm mt-4">
+                        <span class="text-gray-700 dark:text-gray-400 font-bold">Agama</span>
+                        <input type="email"
+                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
+                            name="name" disabled value="{{ $data->agama_id }}">
+                    </label>
+
                     <label class="block text-sm mt-4">
                         <span class="text-gray-700 dark:text-gray-400 font-bold">Password</span>
                         <input type="password"
