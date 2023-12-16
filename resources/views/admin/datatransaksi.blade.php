@@ -8,6 +8,10 @@
         <div class="bg-white shadow-md rounded-lg">
             <div class="w-full">
                 <table class="min-w-full whitespace-no-wrap">
+                    <a href="{{ route('cetak-data-transaksi') }}"
+                    class="mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Print as PDF
+                </a><br><br>
                     <thead>
                         <tr
                             class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">

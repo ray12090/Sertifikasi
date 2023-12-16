@@ -15,10 +15,18 @@ class DataTransaksiController extends Controller
     public function index()
     {
         $orders = Order::join('users', 'orders.user_id', '=', 'users.id')
-                ->select('orders.*', 'users.name as user_name') 
-                ->paginate(10);
+            ->select('orders.*', 'users.name as user_name')
+            ->paginate(10);
 
         return view('admin.datatransaksi', compact('orders'));
+    }
+
+    public function cetakTransaksi()
+    {
+        $cetakOrders = Order::join('users', 'orders.user_id', '=', 'users.id')
+            ->select('orders.*', 'users.name as user_name')->get();
+
+        return view('admin.cetakdatatransaksi', compact('cetakOrders'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -43,7 +51,7 @@ class DataTransaksiController extends Controller
             'quantity' => $request->quantity,
             'days' => $request->days,
             'total_price' => $request->total_price,
-]);
+        ]);
 
         //redirect to index
         return redirect()->route('data-transaksi.index')->with(['success' => 'Data Berhasil Disimpan!']);
@@ -54,10 +62,10 @@ class DataTransaksiController extends Controller
         try {
             // Get data by ID
             $data = Order::join('products', 'orders.product_id', '=', 'products.id')
-                          ->join('users', 'orders.user_id', '=', 'users.id')
-                          ->select('orders.*', 'products.product_name', 'users.name as user_name')
-                          ->findOrFail($id);
-        
+                ->join('users', 'orders.user_id', '=', 'users.id')
+                ->select('orders.*', 'products.product_name', 'users.name as user_name')
+                ->findOrFail($id);
+
             // Render view with data
             return view('admin.detail-transaksi', compact('data'));
         } catch (ModelNotFoundException $e) {
@@ -85,5 +93,4 @@ class DataTransaksiController extends Controller
         //render view with data
         return view('admin.edit-transaksi', compact('data'));
     }
-
 }
