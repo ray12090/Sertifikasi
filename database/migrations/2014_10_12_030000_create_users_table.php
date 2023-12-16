@@ -17,9 +17,17 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->bigInteger("no_hp");
+            $table->unsignedBigInteger('provinsi_id');
+            $table->unsignedBigInteger('kabupaten_id');
+            $table->unsignedBigInteger('agama_id');
             $table->string('usertype')->default('user');
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('provinsi_id')->references('id')->on('provinsi')->onDelete('cascade');
+            $table->foreign('kabupaten_id')->references('id')->on('kabupaten')->onDelete('cascade');
+            $table->foreign('agama_id')->references('id')->on('agama')->onDelete('cascade');
         });
     }
 

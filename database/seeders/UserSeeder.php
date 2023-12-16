@@ -17,6 +17,10 @@ class UserSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@admin.com',
             'password' => bcrypt('admin123'),
+            'no_hp' => '081289396644',
+            'provinsi_id' => '1',
+            'kabupaten_id' => '1',
+            'agama_id' => '1',
             'usertype' => 'admin',
         ]);
 
@@ -25,6 +29,10 @@ class UserSeeder extends Seeder
             'name' => 'User',
             'email' => 'user@user.com',
             'password' => bcrypt('user123'),
+            'no_hp' => '081289396644',
+            'provinsi_id' => '1',
+            'kabupaten_id' => '1',
+            'agama_id' => '1',
             'usertype' => 'user',
         ]);
     }

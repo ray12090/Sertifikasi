@@ -8,6 +8,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DataUserController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\KabupatenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,4 +79,18 @@ Route::resource('/data-pengembalian', \App\Http\Controllers\Admin\DataPengembali
 Route::get('/admin/returns', [DashboardController::class, 'returns'])->name('admin.returns');
 
 // Authentication Routes...
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
+
+// Registration Routes
+Route::get('register', [RegisteredUserController::class, 'showRegistrationForm'])
+    ->middleware('guest')
+    ->name('register');
+
+Route::post('register', [RegisteredUserController::class, 'store'])
+    ->middleware('guest');
+
+Route::post('register', [RegisteredUserController::class, 'store'])->middleware('guest');
+
+
+
+Route::get('/get-kabupaten/{provinsiId}', [KabupatenController::class, 'getKabupatenByProvince']);
