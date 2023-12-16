@@ -70,6 +70,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['au
 Route::resource('/data-user', \App\Http\Controllers\Admin\DataUserController::class);
 Route::resource('/data-product', \App\Http\Controllers\Admin\DataProdukController::class);
 Route::resource('/data-transaksi', \App\Http\Controllers\Admin\DataTransaksiController::class);
+Route::get('/cetak-data-transaksi', [\App\Http\Controllers\Admin\DataTransaksiController::class, 'cetakTransaksi'])->name('cetak-data-transaksi');
 Route::resource('/data-pengembalian', \App\Http\Controllers\Admin\DataPengembalianController::class);
 // Route::get('/data-pengembalian/{id}', [\App\Http\Controllers\Admin\DataPengembalianController::class, 'show'])->name('data-pengembalian.show');
 // Route::delete('/data-pengembalian/{id}', [\App\Http\Controllers\Admin\DataPengembalianController::class, 'destroy'])->name('data-pengembalian.destroy');

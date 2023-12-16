@@ -23,6 +23,7 @@ class DataUserController extends Controller
     public function create(): View
     {
         return view('admin.tambah-user');
+        return response()->json(['success' => true, 'message' => 'Data user telah ditambahkan!']);
     }
 
     public function store(Request $request): RedirectResponse

@@ -12,7 +12,6 @@
             @endauth
         </div>
         @csrf
-
         <!-- Name -->
         <div>
             <div class="font-bold text-xl" align="center">Daftar GoCamp</div>

@@ -4,12 +4,12 @@
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-800">
             Data User
         </h2>
-        <a class="w-44 px-4 py-2 no-underline text-sm text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple hover:no-underline"
+        <a class="ml-auto w-44 px-4 py-2 no-underline text-sm text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple hover:no-underline"
             href="{{ route('data-user.create') }}">
             Create account
             <span class="float-right">+</span>
         </a>
-        <div class="rounded-lg shadow-xs">
+        <div class="rounded-lg shadow-xs mt-3">
         <table class="" style="width: 900px;">
                     <thead>
                         <tr
@@ -90,15 +90,37 @@
                                     </div>
                                 </td>
                             </tr>
-                        @empty
-                            <div class="alert alert-danger">
-                                Data User belum Tersedia.
-                            </div>
-                        @endforelse
+                            @empty
+                                  <div class="alert alert-danger">
+                                      Data Post belum Tersedia.
+                                  </div>
+                            @endforelse
                     </tbody>
                 </table>
                 <br>
                 {{ $data->links() }}
         </div>
-    </div>
+        <script>
+            //message with toastr
+            @if(session()->has('success'))
+
+                toastr.success('{{ session('success') }}', 'BERHASIL!'); 
+
+            @elseif(session()->has('error'))
+
+                toastr.error('{{ session('error') }}', 'GAGAL!'); 
+
+            @endif
+        </script>
 @endsection
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+</div>
+
+
+
+

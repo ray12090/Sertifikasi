@@ -20,12 +20,19 @@ class OrderController extends Controller
             $borrowDate = isset($details['borrow_date']) ? $details['borrow_date'] : Carbon::today()->toDateString();
             $returnDate = isset($details['return_date']) ? $details['return_date'] : Carbon::today()->addDays(1)->toDateString();
 
+            $borrowDateCarbon = Carbon::parse($borrowDate);
+            $returnDateCarbon = Carbon::parse($returnDate);
+            $rentalDays = $borrowDateCarbon->diffInDays($returnDateCarbon);
+
             $currentDate = Carbon::today();
             $penalty = 0;
-            if ($currentDate->gt($returnDate)) {
-                $daysLate = $currentDate->diffInDays($returnDate);
+            if ($currentDate->gt($returnDateCarbon)) {
+                $daysLate = $currentDate->diffInDays($returnDateCarbon);
                 $penalty = 50000 * $daysLate;
             }
+
+            $pricePerDay = $details['price'];
+            $totalPrice = $pricePerDay * $details['quantity'] * $rentalDays + $penalty;
 
             Order::create([
                 'user_id' => Auth::id(),
@@ -35,15 +42,16 @@ class OrderController extends Controller
                 'quantity' => $details['quantity'],
                 'borrow_date' => $borrowDate,
                 'return_date' => $returnDate,
-                'price' => $details['price'] * $details['quantity'],
+                'price' => $pricePerDay * $details['quantity'], // Price per day
                 'penalty' => $penalty,
-                'total_price' => ($details['price'] * $details['quantity']) + $penalty,
+                'total_price' => $totalPrice, // Total price including the rental days and penalty
             ]);
         }
 
         session()->forget('cart');
         return redirect()->route('home')->with('success', 'Checkout successful!');
     }
+
 
 
 
@@ -69,8 +77,8 @@ class OrderController extends Controller
     public function orders()
     {
         $orders = Order::where('user_id', Auth::id())
-        ->whereIn('status', [1, 2])
-        ->get();
+            ->whereIn('status', [1, 2])
+            ->get();
 
         foreach ($orders as $order) {
             $returnDate = Carbon::parse($order->return_date);
@@ -83,8 +91,8 @@ class OrderController extends Controller
             $order->penalty = $penalty;
         }
         $returnOrders = Order::where('user_id', Auth::id())
-        ->where('status', 3)
-        ->get();
+            ->where('status', 3)
+            ->get();
         return view('orders', compact('orders', 'returnOrders'));
     }
 

@@ -74,9 +74,11 @@
                                             class="p-1 pl-2 w-50" /><br>
                                         <label for="return_date">Return Date:</label>
                                         <input type="date" name="return_date"
-                                            value="{{ $details['return_date'] ??today()->addDays(1)->toDateString() }}"
+                                            value="{{ $details['return_date'] ??(isset($details['borrow_date'])? \Carbon\Carbon::parse($details['borrow_date'])->addDays(1)->toDateString(): today()->addDays(1)->toDateString()) }}"
+                                            max="{{ isset($details['borrow_date'])? \Carbon\Carbon::parse($details['borrow_date'])->addDays(5)->toDateString(): today()->addDays(5)->toDateString() }}"
                                             class="p-1 pl-2 w-50" />
                                     </td>
+
                                     <td
                                         class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
                                         {{ $days }}
@@ -99,13 +101,17 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="font-bold p-4 pl-8 text-slate-800 dark:text-slate-800 text-center">Your cart is empty</td>
+                                    <td colspan="7"
+                                        class="font-bold p-4 pl-8 text-slate-800 dark:text-slate-800 text-center">Your
+                                        cart is empty</td>
                                 </tr>
                             @endforelse
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="6" class="font-bold p-4 pl-8 text-slate-800 dark:text-slate-800 text-right"><strong>Total:
+                                <td colspan="6"
+                                    class="font-bold p-4 pl-8 text-slate-800 dark:text-slate-800 text-right">
+                                    <strong>Total:
                                         Rp{{ number_format($total, 2) }}</strong></td>
                             </tr>
                             <tr>
