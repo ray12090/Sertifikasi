@@ -38,15 +38,24 @@ Route::get('cart', [ProductController::class, 'cart'])->middleware('auth')->name
 Route::post('/item/{id}', [ProductController::class, 'addToCart'])->name('additem.to.cart');
 
 // Update and delete cart item routes
-Route::patch('/update-cart-item/{id}', [ProductController::class, 'updateCartItem'])->name('update.cart.item');
+// Route::patch('/update-cart-item/{id}', [ProductController::class, 'updateCartItem'])->name('update.cart.item');
+Route::post('/update-cart-item/{id}', [ProductController::class, 'updateCartItem'])->name('update.cart.item');
+
+// Route::post('/update-multiple-cart-items', [ProductController::class, 'updateMultipleCartItems'])->name('update.multiple.cart.items');
+Route::get('/payment', [OrderController::class, 'payment'])->middleware('auth')->name('payment');
 Route::delete('/delete-cart-item/{id}', [ProductController::class, 'deleteCartItem'])->name('delete.cart.item');
 
 // Checkout
-Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+// Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+// Route::get('/payment', [OrderController::class, 'payment'])->middleware('auth')->name('payment');
+Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout')->middleware('auth');
+
 
 // Your Orders
 Route::get('/orders', [OrderController::class, 'orders'])->middleware('auth')->name('orders');
 Route::put('/update-order-status/{orderId}', [OrderController::class, 'updateOrderStatus'])->name('update.order.status');
+Route::delete('/orders/delete/{order}', [OrderController::class, 'destroy'])->middleware('auth');
+
 
 
 // Return Order

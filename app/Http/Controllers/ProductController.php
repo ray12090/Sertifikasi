@@ -33,8 +33,16 @@ class ProductController extends Controller
         return view('cart');
     }
 
-    public function addToCart(Request $request, $id)
+    public function addToCart(Request $request, $productId, $id)
     {
+        $product = Product::findOrFail($productId);
+    $requestedQuantity = $request->input('quantity');
+    $maxQuantity = min($product->stock, 2);
+
+    if ($requestedQuantity > $maxQuantity) {
+        return redirect()->back()->with('error', 'You cannot rent more than ' . $maxQuantity . ' items.');
+    }
+
         $request->validate([
             'quantity' => 'required|integer|min:1|max:2',
             // 'days' => 'required|integer|min:1|max:5'
@@ -99,7 +107,7 @@ class ProductController extends Controller
             session()->put('cart', $cart);
         }
 
-        return redirect()->route('cart')->with('success', 'Item removed from cart.');
+        return redirect()->route('cart')->with('error', 'Item removed from cart.');
     }
 
     public function getJumlahBarang()

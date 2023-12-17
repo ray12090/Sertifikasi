@@ -5,6 +5,23 @@
         </h2>
     </x-slot>
 
+    <!-- Flash messages -->
+    <div class="container mx-auto p-4">
+        @if (session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                <strong class="font-bold">Success!</strong>
+                <span class="block sm:inline">{{ session('success') }}</span>
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <strong class="font-bold">Error!</strong>
+                <span class="block sm:inline">{{ session('error') }}</span>
+            </div>
+        @endif
+    </div>
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto px-8">
             <div class="mb-4">
@@ -28,12 +45,24 @@
                     @forelse($products as $product)
                         <div class="max-w-sm rounded overflow-hidden shadow-lg flex flex-col justify-between">
                             <div class="p-4 flex-grow">
+                                @php
+                                    $maxQuantity = min($product->stock, 2);
+                                @endphp
+                                @if ($product->photo)
+                                    <img src="{{ asset('products/' . $product->photo) }}" class="rounded-t"
+                                        align="center" style="height: 300px">
+                                @else
+                                    <img src="{{ asset('/products/dummy.jpg') }}" align="center" class="rounded-t">
+                                @endif
                                 <h3 class="font-bold text-xl mb-2">{{ $product->product_name }}</h3>
                                 <p class="text-gray-700 mb-4">{{ $product->product_description }}</p>
                                 <!-- Stock display -->
                                 <p class="text-gray-900 font-bold mb-4">Stock: {{ $product->stock }}</p>
+                                <p class="text-gray-900 font-bold mb-4">
+                                    Max quantity to borrow: {{ $maxQuantity }}
+                                </p>
 
-                                <p class="text-gray-900 font-bold text-lg px-6 py-4" align="right">
+                                <p class="text-gray-900 font-bold text-lg mb-4" align="right">
                                     Price: Rp{{ number_format($product->price, 2) }}
                                 </p>
 
@@ -41,13 +70,14 @@
                                     align="right">
                                     @csrf
                                     <label for="quantity-{{ $product->id }}" align="right">Jumlah:</label>
-                                    <input type="number" name="quantity" min="1" max="2" value="1"
-                                        class="p-1 pl-2 w-10" oninput="checkQuantity(this)" />
+                                    <input type="number" name="quantity" min="1"
+                                        max="{{ $product->stock < 2 ? $product->stock : 2 }}" value="1"
+                                        class="p-1 pl-2 w-10" oninput="checkQuantity(this, {{ $product->stock }})" />
+
 
                                     <button type="submit"
                                         class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"
-                                        align="right">Add
-                                        to Cart</button>
+                                        align="right">Add to Cart</button>
                                 </form>
                                 <div class="px-6 pt-4 pb-2">
                                     <span
@@ -66,10 +96,11 @@
     </div>
 
     <script>
-        function checkQuantity(element) {
-            if (element.value > 2) {
-                alert('The maximum quantity is 2.');
-                element.value = 2;
+        function checkQuantity(element, stock) {
+            let maxQuantity = stock < 2 ? stock : 2;
+            if (element.value > maxQuantity) {
+                alert('The maximum quantity is ' + maxQuantity + '.');
+                element.value = maxQuantity;
             }
         }
     </script>

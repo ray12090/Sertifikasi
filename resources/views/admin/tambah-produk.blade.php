@@ -39,7 +39,7 @@
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Image Product</span>
                             <input type="file" class="form-control @error('photo') is-invalid @enderror" name="photo">
-                            
+
                                 <!-- error message untuk title -->
                                 @error('photo')
                                     <div class="alert alert-danger mt-2">
@@ -84,6 +84,18 @@
 
                             <!-- error message untuk nama produk -->
                             @error('category2')
+                                <div class="alert alert-danger mt-2">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </label><label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Stock</span>
+                            <input type="text"
+                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input @error('category2') is-invalid @enderror"
+                                name="stock" value="{{ old('stock') }}" placeholder="Input Stock 2">
+
+                            <!-- error message untuk nama produk -->
+                            @error('stock')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>

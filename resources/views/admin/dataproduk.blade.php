@@ -1,5 +1,25 @@
 @extends('admin.layouts.home')
 @section('content')
+<div id="removeProductModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+    <!-- Modal content -->
+    <div class="container mx-auto p-4 max-w-2xl mt-24">
+        <div class="bg-white rounded shadow">
+            <div class="border-b p-4">
+                <h5 class="font-bold uppercase text-gray-600">Remove Product</h5>
+            </div>
+            <div class="p-4">
+                <p>Are you sure you want to remove this product?</p>
+            </div>
+            <div class="flex justify-end p-4 border-t">
+                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2"
+                    onclick="document.getElementById('removeProductForm').submit();">Yes, Remove</button>
+                <button class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded m-2"
+                    onclick="document.getElementById('removeProductModal').classList.add('hidden');">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
     <div class="container grid px-6 mx-auto">
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-800">
             Data Product
@@ -75,14 +95,14 @@
                                                 </path>
                                             </svg>
                                         </a>
-                                        <form action="{{ route('data-product.destroy', $post->id) }}" method="post" class="mt-3">
+                                        <form id="removeProductForm" action="{{ route('data-product.destroy', $post->id) }}" method="post" class="mt-3">
                                             @csrf
                                             @method('DELETE')
                                             <button
                                                 class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                aria-label="Delete">
-                                                <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
-                                                    viewBox="0 0 20 20">
+                                                aria-label="Delete"
+                                                onclick="event.preventDefault(); showRemoveModal('{{ route('data-product.destroy', $post->id) }}')">>
+                                                <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd"
                                                         d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
                                                         clip-rule="evenodd"></path>
@@ -113,6 +133,11 @@
                 toastr.error('{{ session('error') }}', 'GAGAL!');
 
             @endif
+
+            function showRemoveModal(actionUrl) {
+                document.getElementById('removeProductForm').action = actionUrl;
+                document.getElementById('removeProductModal').classList.remove('hidden');
+            }
         </script>
 @endsection
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">

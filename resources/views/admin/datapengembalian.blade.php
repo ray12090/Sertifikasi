@@ -2,7 +2,7 @@
 @section('content')
     <div class="container grid px-6 mx-auto">
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-800">
-        Rental Return Data
+            Rental Return Data
         </h2>
 
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
@@ -56,16 +56,19 @@
                                     <form action="{{ route('confirm.return', $order->id) }}" method="POST" class="mt-2">
                                         @csrf
                                         @method('PUT')
-                                        @if($order->bayar)
-                                        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">
-                                            Confirm
-                                        </button>
+                                        @if ($order->bayar)
+                                            <button type="submit"
+                                                class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">
+                                                Confirm
+                                            </button>
                                         @else
-                                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
-                                            Confirm
-                                        </button>
-                                        <br>
-                                        <p class="text-red-600" style="font-size:10px">Kena Penalty : Rp {{ number_format($order->penalty), 2 }}</p>
+                                            <button type="submit"
+                                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
+                                                Confirm
+                                            </button>
+                                            <br>
+                                            <p class="text-red-600" style="font-size:10px">Kena Penalty : Rp
+                                                {{ number_format($order->penalty), 2 }}</p>
                                         @endif
                                     </form>
                                 </td>
@@ -73,7 +76,7 @@
                             </tr>
                         @empty
                             <div class="alert alert-danger">
-                                Produk belum Tersedia.
+                                Tidak ada produk yang dikembalikan saat ini.
                             </div>
                         @endforelse
                     </tbody>

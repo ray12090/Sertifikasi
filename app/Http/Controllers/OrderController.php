@@ -53,7 +53,7 @@ class OrderController extends Controller
         }
 
         session()->forget('cart');
-        return redirect()->route('home')->with('success', 'Checkout successful!');
+        return redirect()->route('orders')->with('success', 'Checkout successful!');
     }
 
 
@@ -148,4 +148,13 @@ class OrderController extends Controller
 
         return redirect()->route('data-pengembalian.index')->with('success', 'Return confirmed successfully.');
     }
+
+    public function destroy(Order $order)
+    {
+
+        $order->delete();
+
+        return redirect()->back()->with('error', 'Order deleted successfully.');
+    }
+
 }
