@@ -139,7 +139,7 @@
                                             <button data-modal-toggle="deleteModal" {{-- onclick="return confirm('Are you sure?')" --}}
                                                 data-order-id="{{ $order->id }}"
                                                 class="delete-order-btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                                                Delete
+                                                Cancel
                                             </button>
                                         </td>
                                     </tr>

@@ -10,8 +10,8 @@
             <div class="w-1/3">
                 <label class="block text-sm">
                     <span class="text-gray-700 dark:text-gray-400 font-bold">Image Product</span>
-                    @if($data->image)
-                    <img src="{{ asset('/products/'.$data->image) }}" class="rounded" style="width: 300px">
+                    @if($data->photo)
+                    <img src="{{ asset('/products/'.$data->photo) }}" class="rounded" style="width: 300px">
                     @else
                     <img src="{{ asset('/products/dummy.jpg') }}" class="rounded" style="width: 300px">
                     @endif

@@ -33,34 +33,28 @@ class ProductController extends Controller
         return view('cart');
     }
 
-    public function addToCart(Request $request, $productId, $id)
+    public function addToCart(Request $request, $productId)
     {
         $product = Product::findOrFail($productId);
-    $requestedQuantity = $request->input('quantity');
-    $maxQuantity = min($product->stock, 2);
+        $requestedQuantity = $request->input('quantity');
+        $maxQuantity = min($product->stock, 2);
 
-    if ($requestedQuantity > $maxQuantity) {
-        return redirect()->back()->with('error', 'You cannot rent more than ' . $maxQuantity . ' items.');
-    }
+        if ($requestedQuantity > $maxQuantity) {
+            return redirect()->back()->with('error', 'You cannot rent more than ' . $maxQuantity . ' items.');
+        }
 
-        $request->validate([
-            'quantity' => 'required|integer|min:1|max:2',
-            // 'days' => 'required|integer|min:1|max:5'
-        ]);
+        // Rest of your validation...
 
-        $product = Product::findOrFail($id);
         $cart = session()->get('cart', []);
 
         if (count($cart) >= 2) {
             return redirect()->back()->with('error', 'You can only rent a maximum of 2 items at a time.');
         }
 
-        $cart[$id] = [
+        $cart[$productId] = [
             'product_name' => $product->product_name,
             'price' => $product->price,
-            'quantity' => $request->quantity,
-            // 'borrow_date' => Carbon::today()->toDateString(),
-            // 'return_date' => Carbon::today()->addDays(1)->toDateString(),
+            'quantity' => $requestedQuantity,
             'photo' => $product->photo
         ];
 
@@ -69,10 +63,10 @@ class ProductController extends Controller
     }
 
 
+
     public function updateCartItem(Request $request, $id)
     {
         $request->validate([
-            'quantity' => 'required|integer|min:1|max:2',
             'borrow_date' => 'required|date',
             'return_date' => 'required|date|after_or_equal:borrow_date',
         ]);
@@ -87,14 +81,29 @@ class ProductController extends Controller
 
         $cart = session()->get('cart');
         if (isset($cart[$id])) {
-            $cart[$id]['quantity'] = $request->quantity;
             $cart[$id]['borrow_date'] = $borrowDate->toDateString();
             $cart[$id]['return_date'] = $returnDate->toDateString();
             session()->put('cart', $cart);
         }
 
-        return redirect()->route('cart')->with('success', 'Cart updated successfully.');
+        return redirect()->route('cart');
     }
+
+    public function updateCartQuantity(Request $request, $id)
+    {
+        $request->validate([
+            'quantity' => 'required|integer|min:1|max:2',
+        ]);
+
+        $cart = session()->get('cart');
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity'] = $request->quantity;
+            session()->put('cart', $cart);
+        }
+
+        return redirect()->route('cart');
+    }
+
 
 
 

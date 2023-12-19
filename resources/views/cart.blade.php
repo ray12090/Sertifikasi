@@ -58,8 +58,10 @@
                     <p>Are you sure you want to proceed with checkout?</p>
                 </div>
                 <div class="flex justify-end p-4 border-t">
-                    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2" onclick="confirmCheckout()">Yes, Proceed</button>
-                    <button class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded m-2" onclick="document.getElementById('checkoutModal').classList.add('hidden');">Cancel</button>
+                    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2"
+                        onclick="confirmCheckout()">Yes, Proceed</button>
+                    <button class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded m-2"
+                        onclick="document.getElementById('checkoutModal').classList.add('hidden');">Cancel</button>
                 </div>
             </div>
         </div>
@@ -82,13 +84,13 @@
                                     Price</th>
                                 <th
                                     class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
-                                    Quantity</th>
+                                    Quantity (max. 2)</th>
                                 <th
                                     class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
                                     Rental Duration</th>
                                 <th
                                     class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
-                                    Day(s)</th>
+                                    Days (max. 5 days)</th>
                                 <th
                                     class="border-b dark:border-slate-600 font-bold p-4 pl-8 pt-0 pb-3 text-slate-800 dark:text-slate-800 text-center">
                                     Total</th>
@@ -122,26 +124,36 @@
                                         Rp{{ number_format($details['price'], 2) }}</td>
                                     <td
                                         class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
-                                        <form action="{{ route('update.cart.item', $id) }}" method="POST">
+                                        <form action="{{ route('update.cart.quantity', $id) }}" method="POST">
                                             @csrf
                                             @method('post')
                                             <input type="number" name="quantity" value="{{ $details['quantity'] }}"
-                                                class="p-1 pl-2 w-10" min="1" max="2"
+                                                class="p-1 pl-2 w-10 auto-submit" min="1" max="2"
                                                 data-id="{{ $id }}" />
+                                            </form>
+                                            {{-- <div class="block text-red-600 text-sm">Max. 2</div> --}}
                                     </td>
                                     <td
                                         class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
-                                        <label for="borrow_date">Borrow Date:</label>
-                                        <input type="date" name="borrow_date"
-                                            value="{{ $details['borrow_date'] ?? today()->toDateString() }}"
-                                            min="{{ today()->toDateString() }}"
-                                            class="p-1 pl-2 w-50" data-id="{{ $id }}" /><br>
-                                        <label for="return_date">Return Date:</label>
-                                        <input type="date" name="return_date"
-                                            value="{{ $details['return_date'] ??(isset($details['borrow_date'])? \Carbon\Carbon::parse($details['borrow_date'])->addDays(1)->toDateString(): today()->addDays(1)->toDateString()) }}"
-                                            min="{{ isset($details['borrow_date'])? \Carbon\Carbon::parse($details['borrow_date'])->addDays(1)->toDateString(): today()->addDays(1)->toDateString() }}"
-                                            max="{{ isset($details['borrow_date'])? \Carbon\Carbon::parse($details['borrow_date'])->addDays(5)->toDateString(): today()->addDays(5)->toDateString() }}"
-                                            class="p-1 pl-2 w-50" data-id="{{ $id }}" />
+                                        <label for="borrow_date">Borrow Date:</label><br>
+                                        <form action="{{ route('update.cart.item', $id) }}" method="POST">
+                                            @csrf
+                                            @method('post')
+                                            <input type="date" name="borrow_date"
+                                                value="{{ $details['borrow_date'] ?? today()->toDateString() }}"
+                                                min="{{ today()->toDateString() }}" class="p-1 pl-2 w-50 auto-submit"
+                                                max="{{ isset($details['borrow_date'])? \Carbon\Carbon::parse($details['borrow_date'])->addDays(5)->toDateString(): today()->addDays(5)->toDateString() }}"
+                                                data-id="{{ $id }}" /><br>
+                                            <label for="return_date">Return Date:</label><br>
+                                            <input type="date" name="return_date"
+                                                value="{{ $details['return_date'] ??(isset($details['borrow_date'])? \Carbon\Carbon::parse($details['borrow_date'])->addDays(1)->toDateString(): today()->addDays(1)->toDateString()) }}"
+                                                min="{{ isset($details['borrow_date'])? \Carbon\Carbon::parse($details['borrow_date'])->addDays(1)->toDateString(): today()->addDays(1)->toDateString() }}"
+                                                max="{{ isset($details['borrow_date'])? \Carbon\Carbon::parse($details['borrow_date'])->addDays(5)->toDateString(): today()->addDays(5)->toDateString() }}"
+                                                class="p-1 pl-2 w-50 auto-submit" data-id="{{ $id }}" /><br><br>
+                                            {{-- <button type="submit"
+                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-auto">Set
+                                                Date</button> --}}
+                                        </form>
                                     </td>
 
                                     <td
@@ -149,19 +161,21 @@
                                         {{ $days }}
                                     </td>
                                     <td
-                                        class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
+                                        class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-900 dark:text-slate-900 text-center">
                                         Rp{{ number_format($totalPerProduct, 2) }}</td>
                                     <td
                                         class="border-b dark:border-slate-600 font-bold p-4 pl-8 text-slate-800 dark:text-slate-600 text-center">
-                                        <button type="submit"
-                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-full">Update</button>
-                                        </form>
                                         <form action="{{ route('delete.cart.item', $id) }}" method="POST">
                                             @csrf
                                             @method('delete')
                                             <button type="button"
                                                 onclick="showRemoveModal('{{ route('delete.cart.item', $id) }}')"
-                                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full w-full">Delete</button>
+                                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">
+                                                <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd"
+                                                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                        clip-rule="evenodd"></path>
+                                                </svg></button>
                                         </form>
                                     </td>
                                 </tr>
@@ -177,7 +191,7 @@
                         <tfoot>
                             <tr>
                                 <td colspan="6"
-                                    class="font-bold p-4 pl-8 text-slate-800 dark:text-slate-800 text-right">
+                                    class="text-lg p-4 pl-8 text-slate-900 dark:text-slate-900 text-right">
                                     <strong>Total:
                                         Rp{{ number_format($total, 2) }}</strong>
                                 </td>
@@ -191,7 +205,7 @@
                                     <form action="{{ route('checkout') }}" method="POST" class="inline">
                                         @csrf
                                         <button type="submit"
-                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                                            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"
                                             {{ session('cart', []) == [] ? 'disabled' : '' }}>
                                             Checkout
                                         </button>
@@ -199,14 +213,14 @@
                             </tr>
                         </tfoot>
                     </table>
-                    </form>
+                    {{-- </form> --}}
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        document.querySelectorAll('#cart .auto-submit').forEach(input => {
+        document.querySelectorAll('.auto-submit').forEach(input => {
             input.addEventListener('change', () => {
                 input.closest('form').submit();
             });
@@ -217,45 +231,32 @@
             document.getElementById('removeItemModal').classList.remove('hidden');
         }
 
-        // document.querySelectorAll('.quantity-input, .date-input').forEach(input => {
-        //     input.addEventListener('change', function() {
-        //         const id = this.dataset.id;
-        //         const quantityInput = document.querySelector(`.quantity-input[data-id="${id}"]`);
-        //         const pricePerDay = parseFloat(quantityInput.dataset.pricePerDay);
-        //         const borrowDateInput = document.querySelector(
-        //         `input[name="borrow_date"][data-id="${id}"]`);
-        //         const returnDateInput = document.querySelector(
-        //         `input[name="return_date"][data-id="${id}"]`);
+        // document.addEventListener('DOMContentLoaded', function () {
+//     // Function to compare dates
+//     function isBorrowDateAfterReturnDate(borrowDateInput, returnDateInput) {
+//         var borrowDate = new Date(borrowDateInput.value);
+//         var returnDate = new Date(returnDateInput.value);
+//         return borrowDate > returnDate;
+//     }
 
-        //         const quantity = parseInt(quantityInput.value);
-        //         const borrowDate = new Date(borrowDateInput.value);
-        //         const returnDate = new Date(returnDateInput.value);
-        //         const days = (returnDate - borrowDate) / (1000 * 3600 * 24) + 1;
+//     // Add event listener for borrow date and return date changes
+//     document.querySelectorAll('input[type="date"].auto-submit').forEach(input => {
+//         input.addEventListener('change', function() {
+//             // Find the related date inputs in the same row/form
+//             var borrowDateInput = this.closest('tr').querySelector('input[name="borrow_date"]');
+//             var returnDateInput = this.closest('tr').querySelector('input[name="return_date"]');
 
-        //         if (days >= 0) {
-        //             const totalPrice = pricePerDay * quantity * days;
-        //             document.getElementById(`total-${id}`).textContent = `Rp${totalPrice.toFixed(2)}`;
+//             // Check if borrow date is after return date
+//             if (isBorrowDateAfterReturnDate(borrowDateInput, returnDateInput)) {
+//                 alert("The borrow date cannot be after the return date.");
+//             } else {
+//                 // Submit the form if dates are valid
+//                 this.closest('form').submit();
+//             }
+//         });
+//     });
+// });
 
-        //             updateOverallTotal();
-        //         }
-        //     });
-        // });
-
-        // function updateOverallTotal() {
-        //     let overallTotal = 0;
-        //     document.querySelectorAll('.quantity-input').forEach(input => {
-        //         const id = input.dataset.id;
-        //         const totalElement = document.getElementById(`total-${id}`);
-        //         const total = parseFloat(totalElement.textContent.replace('Rp', '').replace(',', ''));
-        //         overallTotal += total;
-        //     });
-        //     document.getElementById('overall-total').textContent = `Rp${overallTotal.toFixed(2)}`;
-        // }
-
-        // function showRemoveModal(actionUrl) {
-        //     document.getElementById('removeItemForm').action = actionUrl;
-        //     document.getElementById('removeItemModal').classList.remove('hidden');
-        // }
     </script>
 
 </x-app-layout>

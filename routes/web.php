@@ -35,11 +35,16 @@ Route::get('rental', [ProductController::class, 'rental'])->middleware('auth')->
 Route::get('cart', [ProductController::class, 'cart'])->middleware('auth')->name('cart');
 
 // Cart Operations
-Route::post('/item/{id}', [ProductController::class, 'addToCart'])->name('additem.to.cart');
+// Route::post('/item/{id}', [ProductController::class, 'addToCart'])->name('additem.to.cart');
+Route::post('/add-to-cart/{productId}', [ProductController::class, 'addToCart'])->name('additem.to.cart');
+
 
 // Update and delete cart item routes
 // Route::patch('/update-cart-item/{id}', [ProductController::class, 'updateCartItem'])->name('update.cart.item');
 Route::post('/update-cart-item/{id}', [ProductController::class, 'updateCartItem'])->name('update.cart.item');
+Route::post('/update-cart-quantity/{id}', [ProductController::class, 'updateCartQuantity'])->name('update.cart.quantity');
+// Route::post('/cart/update/{id}', [ProductController::class, 'updateCartItem'])->name('update.cart.item');
+
 
 // Route::post('/update-multiple-cart-items', [ProductController::class, 'updateMultipleCartItems'])->name('update.multiple.cart.items');
 Route::get('/payment', [OrderController::class, 'payment'])->middleware('auth')->name('payment');

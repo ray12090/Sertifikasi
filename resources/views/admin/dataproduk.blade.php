@@ -56,7 +56,7 @@
                                 </td>
                                 <td class="text-center">
                                     @if($post->photo)
-                                    <img src="{{ asset('/products/dummy.jpg') }}" class="rounded" style="width: 100px">
+                                    <img src="{{ asset('products/' . $post->photo) }}" class="rounded" style="width: 100px">
                                     @else
                                     <img src="{{ asset('/products/dummy.jpg') }}" class="rounded" style="width: 100px">
                                     @endif
